@@ -18,7 +18,7 @@ class ExcursionsFixtures extends Fixture
             $dateStart = $faker->dateTimeBetween('-2 months', '+2 months');
             $excursion->setStartDate($dateStart);
             $excursion->setDuration(mt_rand(30, 240));
-            $excursion->setLimitRegistrationDate($faker->dateTimeInInterval('$dateStart', '+2 months'));
+            $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '+2 months'));
             $excursion->setMaxRegistrationNumber(mt_rand(1, 30));
             $excursion->setDescription($faker->sentence(8));
             //TO DO Handle State
