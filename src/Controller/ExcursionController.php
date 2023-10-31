@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExcursionController extends AbstractController
 {
-    #[Route('/', name: 'main_home', methods: ['GET'])]
-    public function home(): Response
-    {
-        return $this->render("main/home.html.twig");
-    }
+//    #[Route('/', name: 'main_home', methods: ['GET'])]
+//    public function home(): Response
+//    {
+//        return $this->render("main/home.html.twig");
+//    }
 
     #[Route('/create', name: 'excursion_create')]
     public function create(): Response
@@ -26,6 +26,14 @@ class ExcursionController extends AbstractController
     public function update(): Response
     {
         return $this->render('excursion/update.html.twig', [
+            'controller_name' => 'ExcursionController',
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'excursion_delete')]
+    public function delete(): Response
+    {
+        return $this->render('excursion/delete.html.twig', [
             'controller_name' => 'ExcursionController',
         ]);
     }
