@@ -7,8 +7,8 @@
 
         <div class="row justify-content-around">
             {% for excursion in excursions %}
-
-                <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6" style="max-width: 20rem;"
+                <a href="{{ path('excursion_details', {'id': excursion.id}) }}">
+                <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 " style="max-width: 20rem;"
                      bis_skin_checked="1">
                     <div class="card-header" bis_skin_checked="1"><h3>{{ excursion.name }}</h3></div>
                     <div class="card-body" bis_skin_checked="1">
@@ -20,7 +20,7 @@
 
                     </div>
                 </div>
-
+                </a>
             {% else %}
                 <tr>
                     <td colspan="5">Aucune sortie dans la base</td>
