@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExcursionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,8 +35,28 @@ class Excursion
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $state = null;
+    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'excursions')]
+    private Collection $participants;
+
+    #[ORM\ManyToOne(inversedBy: 'organizedExcursions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $organizer = null;
+
+    #[ORM\ManyToOne(inversedBy: 'excursions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $campus = null;
+
+    #[ORM\ManyToOne(inversedBy: 'excursions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?State $state = null;
+
+    #[ORM\ManyToOne(inversedBy: 'excursions')]
+    private ?Place $place = null;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,14 +135,74 @@ class Excursion
         return $this;
     }
 
-    public function getState(): ?string
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Member $participant): static
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Member $participant): static
+    {
+        $this->participants->removeElement($participant);
+
+        return $this;
+    }
+
+    public function getOrganizer(): ?Member
+    {
+        return $this->organizer;
+    }
+
+    public function setOrganizer(?Member $organizer): static
+    {
+        $this->organizer = $organizer;
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): static
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getState(): ?State
     {
         return $this->state;
     }
 
-    public function setState(?string $state): static
+    public function setState(?State $state): static
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getPlace(): ?Place
+    {
+        return $this->place;
+    }
+
+    public function setPlace(?Place $place): static
+    {
+        $this->place = $place;
 
         return $this;
     }
