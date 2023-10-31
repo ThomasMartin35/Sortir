@@ -2,25 +2,32 @@
 {% block title %}{{ parent() }} | Home{% endblock %}
 
 {% block body %}
-<h1>Liste des sorties</h1>
-<table class="table-sm table-bordered">
-    <thead>
-    <tr>
-        <th>Nom</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for excursion in excursions %}
-    <tr>
-        <td>{{ excursion.name }}</td>
-    </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">Aucune sortie dans la base</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+        <h1 class="mt-3 mb-3 ">Liste des sorties</h1><br>
+
+        <div class="row justify-content-around">
+            {% for excursion in excursions %}
+
+                <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6" style="max-width: 20rem;"
+                     bis_skin_checked="1">
+                    <div class="card-header" bis_skin_checked="1"><h3>{{ excursion.name }}</h3></div>
+                    <div class="card-body" bis_skin_checked="1">
+                        <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
+                            à {{ excursion.startDate | date('H:i') }}. </h5>
+                        <p class="card-text"> Description : {{ excursion.description }}</p>
+                        <p class="card-text">Date limite d'inscription
+                            : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
+
+                    </div>
+                </div>
+
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune sortie dans la base</td>
+                </tr>
+            {% endfor %}
+        </div>
+
 
 {% endblock %}
 
