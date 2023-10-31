@@ -1,8 +1,15 @@
+a{
+    text-decoration: none !important;
+}
+
 .navbar-collapse{
     justify-content: flex-end !important;
 }
-h1 {
+h1, h2 {
     color: tomato;
+    margin-bottom: 3px;
+    margin-top: 3px;
+
 }
 
 .container {
