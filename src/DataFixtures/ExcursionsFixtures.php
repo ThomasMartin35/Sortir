@@ -32,6 +32,9 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
             //Fixture reprenant le addReference de StateFixtures
             $state = $this->getReference('created');
             $excursion->setState($state);
+            //Fixture reprenant le addReference de PlaceFixtures
+            $place = $this->getReference('place1');
+            $excursion->setPlace($place);
 
             $manager->persist($excursion);
         }

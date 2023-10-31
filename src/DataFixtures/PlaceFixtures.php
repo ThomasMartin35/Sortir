@@ -43,7 +43,9 @@ class PlaceFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
 
-
+        $this->addReference('place1', $place1);
+//        $this->addReference('place2', $place2);
+//        $this->addReference('place3', $place3);
     }
 
 
