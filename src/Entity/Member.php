@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MemberRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,6 +44,22 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $isAdmin = null;
+
+    #[ORM\ManyToMany(targetEntity: Excursion::class, mappedBy: 'participants')]
+    private Collection $excursions;
+
+    #[ORM\OneToMany(mappedBy: 'organizer', targetEntity: Excursion::class)]
+    private Collection $organizedExcursions;
+
+    #[ORM\ManyToOne(inversedBy: 'members')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $campus = null;
+
+    public function __construct()
+    {
+        $this->excursions = new ArrayCollection();
+        $this->organizedExcursions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -169,6 +187,75 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsAdmin(?bool $isAdmin): static
     {
         $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Excursion>
+     */
+    public function getExcursions(): Collection
+    {
+        return $this->excursions;
+    }
+
+    public function addExcursion(Excursion $excursion): static
+    {
+        if (!$this->excursions->contains($excursion)) {
+            $this->excursions->add($excursion);
+            $excursion->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExcursion(Excursion $excursion): static
+    {
+        if ($this->excursions->removeElement($excursion)) {
+            $excursion->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Excursion>
+     */
+    public function getOrganizedExcursions(): Collection
+    {
+        return $this->organizedExcursions;
+    }
+
+    public function addOrganizedExcursion(Excursion $organizedExcursion): static
+    {
+        if (!$this->organizedExcursions->contains($organizedExcursion)) {
+            $this->organizedExcursions->add($organizedExcursion);
+            $organizedExcursion->setOrganizer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizedExcursion(Excursion $organizedExcursion): static
+    {
+        if ($this->organizedExcursions->removeElement($organizedExcursion)) {
+            // set the owning side to null (unless already changed)
+            if ($organizedExcursion->getOrganizer() === $this) {
+                $organizedExcursion->setOrganizer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): static
+    {
+        $this->campus = $campus;
 
         return $this;
     }
