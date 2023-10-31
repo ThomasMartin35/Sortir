@@ -1,0 +1,6 @@
+.navbar-collapse{
+    justify-content: flex-end !important;
+}
+h1 {
+    color: tomato;
+}
