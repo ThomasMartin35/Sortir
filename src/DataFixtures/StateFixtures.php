@@ -35,6 +35,15 @@ class StateFixtures extends Fixture
         $manager->persist($canceled);
 
         $manager->flush();
+
+        $this->addReference('created', $created);
+        $this->addReference('opened', $opened);
+        $this->addReference('closed', $closed);
+        $this->addReference('inProgress', $inProgress);
+        $this->addReference('finished', $finished);
+        $this->addReference('canceled', $canceled);
+
+
     }
 
 }
