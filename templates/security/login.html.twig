@@ -15,8 +15,8 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Merci de vous connecter</h1>
-    <label for="inputMail">Identifiant (mail) : </label>
-    <input type="text" value="{{ last_username }}" name="mail" id="inputMail" class="form-control" autocomplete="username" required autofocus>
+    <label for="inputMail">Identifiant : </label>
+    <input type="text" value="{{ last_username }}" name="mail" id="inputMail" class="form-control" autocomplete="username" required autofocus placeholder="xyz@mail.com">
     <label for="inputPassword">Mot de passe : </label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
     <input type="checkbox" name="_remember_me"> Se souvenir de moi

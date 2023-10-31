@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Excursion Details{% endblock %}
+
+
+{% block body %}
+
+    <h1>Détails de la sortie</h1>
+
+    <p>Nom de la sortie : {{ excursion.name }} </p>
+    <p>Start date and time : {{ excursion.startDate | date('d M Y') }} à {{ excursion.startDate | date('H:i') }}</p>
+    <p>Date limite d'inscription : {{ excursion.limitRegistrationDate | date('d M Y') }}</p>
+    <p>Nombre de place : {{ excursion.maxRegistrationNumber }}</p>
+    <p>Durée : {{ excursion.duration }} minutes</p>
+    <p>Descriptions et infos : {{ excursion.description }}</p>
+    <p>Campus : {{ excursion.campus.name }}</p>
+    <p>Lieu : {{ excursion.place.name}} </p>
+    <p>Rue : {{ excursion.place.street }}</p>
+    <p>Code postal : {{ excursion.place.city.postcode }}</p>
+    <p>latitude : {{ excursion.place.latitude }}</p>
+    <p>longitude : {{ excursion.place.longitude }}</p>
+
+    <h2>Liste des participants</h2>
+
+
+{#    Le tableau des participants est pret !#}
+{#    <table class="table table-hover">#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <th scope="col">Pseudo</th>#}
+{#            <th scope="col">Nom</th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        <tr class="table-light">#}
+{#            <th scope="row"> {{  }}</th>#}
+{#            <td>Column content</td>#}
+{#            <td>Column content</td>#}
+{#            <td>Column content</td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+
+{% endblock %}
