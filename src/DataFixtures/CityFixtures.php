@@ -10,22 +10,27 @@ class CityFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $rennes = new City();
-        $rennes->setName('Campus ENI CHARTRES DE BRETAGNE');
-        $rennes->setPostcode('35131');
-        $manager->persist($rennes);
+        $chartres = new City();
+        $chartres->setName('CHARTRES DE BRETAGNE');
+        $chartres->setPostcode('35131');
+        $manager->persist($chartres);
 
         $nantes = new City();
-        $nantes->setName('Campus ENI SAINT-HERBLAIN');
+        $nantes->setName('SAINT-HERBLAIN');
         $nantes->setPostCode ('44800');
         $manager->persist($nantes);
 
         $roche = new City();
-        $roche->setName('Campus ENI LA ROCHE SUR YON');
+        $roche->setName('LA ROCHE SUR YON');
         $roche->setPostcode('85000');
         $manager->persist($roche);
 
         $manager->flush();
+
+        $this->addReference('chartres', $chartres);
+        $this->addReference('nantes', $nantes);
+        $this->addReference('roche', $roche);
+
     }
 
 }
