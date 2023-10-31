@@ -2,5 +2,25 @@
 {% block title %}{{ parent() }} | Home{% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
+<h1>Liste des sorties</h1>
+<table class="table-sm table-bordered">
+    <thead>
+    <tr>
+        <th>Nom</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for excursion in excursions %}
+    <tr>
+        <td>{{ excursion.name }}</td>
+    </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">Aucune sortie dans la base</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
+

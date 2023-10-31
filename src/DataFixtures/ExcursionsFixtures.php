@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Excursion;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExcursionsFixtures extends Fixture
+class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,10 +22,31 @@ class ExcursionsFixtures extends Fixture
             $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '+2 months'));
             $excursion->setMaxRegistrationNumber(mt_rand(1, 30));
             $excursion->setDescription($faker->sentence(8));
-            //TO DO Handle State
+
+            //Fixture reprenant le addReference de MemberFixtures
+            $organizer = $this->getReference('organizerAdmin');
+            $excursion->setOrganizer($organizer);
+            //Fixture reprenant le addReference de CampusFixtures
+            $campus = $this->getReference('campusRennes');
+            $excursion->setCampus($campus);
+            //Fixture reprenant le addReference de StateFixtures
+            $state = $this->getReference('created');
+            $excursion->setState($state);
+
             $manager->persist($excursion);
         }
 
         $manager->flush();
     }
+
+    public function getDependencies(): array
+    {
+        return [
+            PlaceFixtures::class,
+            StateFixtures::class,
+            MemberFixtures::class,
+            CampusFixtures::class,
+        ];
+    }
+
 }

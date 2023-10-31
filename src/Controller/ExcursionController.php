@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use App\Repository\ExcursionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ExcursionController extends AbstractController
 {
-//    #[Route('/', name: 'main_home', methods: ['GET'])]
-//    public function home(): Response
-//    {
-//        return $this->render("main/home.html.twig");
-//    }
+    #[Route('/', name: 'main_excursionList', methods: ['GET'])]
+    public function list(ExcursionRepository $excursionRepository): Response
+    {
+        $excursions = $excursionRepository->findAll();
+        dump($excursions);
+        return $this->render('main/home.html.twig', [
+            'excursions' => $excursions
+        ]);
+    }
 
     #[Route('/create', name: 'excursion_create')]
     public function create(): Response
