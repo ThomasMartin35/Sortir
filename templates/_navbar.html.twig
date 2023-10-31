@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container-fluid" bis_skin_checked="1">
 
-        <a href="{{ path('main_home') }}" title="Go back to homepage">
+        <a href="{{ path('main_home') }}" title="Retour à l'accueil">
             <img src="{{ asset('img/navLogo.png') }}"
                  alt="Sortir.com Logo"
             >
@@ -21,19 +21,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mon profil</a>
-                </li>
                 {% if app.user %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
+                    <a class="nav-link" href="{{ path('member_details', {'id': app.user.id}) }}" title="Voir mon profil">Mon profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}" title="Se déconnecter">
                         Se déconnecter
                     </a>
                 </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}"
-                       title="Login">
+                       title="Se connecter">
                         Se connecter
                     </a>
                 </li>
