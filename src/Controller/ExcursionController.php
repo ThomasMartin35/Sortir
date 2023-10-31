@@ -19,7 +19,19 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'excursion_create')]
+    #[Route('/excursion/{id}/details', name: 'excursion_details')]
+    public function details(int $id, ExcursionRepository $excursionRepository): Response
+    {
+        $excursion = $excursionRepository->find($id);
+        if (!$excursion){
+            throw $this->createNotFoundException('Excursion non trouvé');
+        }
+        return $this->render('excursion/details.html.twig', [
+            'excursion' => $excursion
+        ]);
+    }
+
+    #[Route('/excursion/create', name: 'excursion_create')]
     public function create(): Response
     {
         return $this->render('excursion/create.html.twig', [
@@ -27,7 +39,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'excursion_update')]
+    #[Route('/excursion/{id}/update', name: 'excursion_update')]
     public function update(): Response
     {
         return $this->render('excursion/update.html.twig', [
@@ -35,7 +47,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'excursion_delete')]
+    #[Route('/excursion/{id}/delete', name: 'excursion_delete')]
     public function delete(): Response
     {
         return $this->render('excursion/delete.html.twig', [
