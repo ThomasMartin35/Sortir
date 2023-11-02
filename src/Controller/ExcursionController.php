@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Excursion;
 use App\Form\ExcursionType;
+use App\Form\FilterFormType;
+use App\Form\Model\FilterModel;
 use App\Repository\ExcursionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,14 +15,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExcursionController extends AbstractController
 {
-    #[Route('/', name: 'main_excursionList', methods: ['GET'])]
-    public function list(ExcursionRepository $excursionRepository): Response
+    #[Route('/', name: 'main_excursionList')]
+    public function list(ExcursionRepository $excursionRepository, Request $request ): Response
     {
-        $excursions = $excursionRepository->findAll();
+        $filterModel = new FilterModel();
+        $filterForm = $this->createForm(FilterFormType::class, $filterModel);
+        $filterForm -> handleRequest($request);
+
+//        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+//
+//        }
+
+        $excursions = $excursionRepository->findExcursionByFilters($filterModel);
         dump($excursions);
         return $this->render('main/home.html.twig', [
-            'excursions' => $excursions
+            'excursions' => $excursions,
+            'filterForm' => $filterForm->createView()
         ]);
+
     }
 
     #[Route('/excursion/{id}/details', name: 'excursion_details')]

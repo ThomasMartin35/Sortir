@@ -15,3 +15,15 @@ h1, h2 {
 .container {
     width: 80%;
 }
+
+.detailsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.detailsColumn {
+    width: 50%;
+   justify-content: center;
+}
