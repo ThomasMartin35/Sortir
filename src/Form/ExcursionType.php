@@ -28,21 +28,20 @@ class ExcursionType extends AbstractType
             ])
             ->add('startDate', DateTimeType::class, [
                 "label" => "Date de l'événement :",
-                'date_label' => 'Commence le'
-
+                'widget' => 'single_text',
             ])
             ->add('duration', IntegerType::class, [
                 "label" => "Durée :",
             ])
 
             ->add('limitRegistrationDate',DateTimeType::class, [
-                'date_label' => 'Date limite d\'inscription',
-                'date_widget' => 'choice'
+                'label' => 'Date limite d\'inscription',
+                'widget' => 'single_text'
             ])
             ->add('maxRegistrationNumber', IntegerType::class, [
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Décrivez votre événement',
+                'label' => 'Décrivez votre événement : ',
                 'required' => false
              ])
 
@@ -53,14 +52,23 @@ class ExcursionType extends AbstractType
                 'placeholder'=> '--Choisir un campus--'
             ])
 
-            ->add('ville', EntityType::class, [
+            ->add('city', EntityType::class, [
                 'label'=> 'Ville : ',
+                'mapped'=> false,
                 'class' => City::class,
                 'choice_label' => 'name',
                 'placeholder'=> '--Choisir une ville--'
             ])
 
-            // TODO ->add('place')
+            ->add('place', EntityType::class, [
+                'label'=> 'Lieu : ',
+                'mapped'=> false,
+                'class' => Place::class,
+                'choice_label' => 'name',
+                'placeholder'=> '--Choisir une ville--'
+            ])
+
+
         ;
     }
 
