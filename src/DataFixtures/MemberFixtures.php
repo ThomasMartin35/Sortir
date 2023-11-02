@@ -26,6 +26,7 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
         // création de l'administrateur
         $admin = new Member();
         $admin->setMail('admin@campus-eni.fr');
+        $admin->setPseudo('ADMINPseudo');
         $admin->setName('ADMIN');
         $admin->setFirstName('admin');
         $admin->setPhone('0606060606');
@@ -41,6 +42,7 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= self::NB_MEMBER; $i++) {
             $member = new Member();
             $member->setMail('test' . $i . '@campus-eni.fr');
+            $member->setPseudo('TESTPseudo' . $i);
             $member->setName('TEST' . $i);
             $member->setFirstName('test' . $i);
             $member->setPhone('0606060606');

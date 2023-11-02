@@ -3,4 +3,11 @@
 
 {% block body %}
     <h1>Modification du profil</h1>
+
+    {{ form_start(memberUpdateForm) }}
+    {{ form_widget(memberUpdateForm) }}
+
+    <button class="btn btn-success">Modifier</button>
+    {{ form_end(memberUpdateForm) }}
+
 {% endblock %}
