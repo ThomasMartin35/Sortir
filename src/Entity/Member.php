@@ -6,11 +6,14 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 #[ORM\Table(name: '`member`')]
+#[UniqueEntity(fields: ['mail'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
 class Member implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,6 +23,9 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $mail = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $pseudo = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -74,6 +80,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMail(string $mail): static
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

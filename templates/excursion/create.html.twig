@@ -1,20 +1,43 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ parent() }} | Excursion Create{% endblock %}
+{% form_theme excursionForm 'foundation_5_layout.html.twig' %}
 
 {% block body %}
     <h1>Créer une sortie</h1>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.6.0/dist/flatly/bootstrap.css">
 
-        <form>
+        <div class="form-group " bis_skin_checked="1">
+            {{ form_start(excursionForm)}}
+            {{ form_label(excursionForm.name) }}
+            {{ form_widget(excursionForm.name) }}<br>
+            {{ form_label(excursionForm.startDate) }}
+            {{ form_widget(excursionForm.startDate) }}<br>
+            {{ form_label(excursionForm.limitRegistrationDate) }}
+            {{ form_widget(excursionForm.limitRegistrationDate) }}<br>
+            {{ form_label(excursionForm.maxRegistrationNumber) }}
+            {{ form_widget(excursionForm.maxRegistrationNumber) }}<br>
+            {{ form_label(excursionForm.duration) }}
+            {{ form_widget(excursionForm.duration) }} minutes. <br>
+            {{ form_label(excursionForm.description) }}
+            {{ form_widget(excursionForm.description) }}<br>
+            <!-- ajouter le campus par défaut du user -->
+            {{ form_label(excursionForm.campus) }}
+            {{ form_widget(excursionForm.campus) }}<br>
+            {{ form_label(excursionForm.city) }}
+            {{ form_widget(excursionForm.city) }}<br>
+            {{ form_label(excursionForm.place) }}
+            {{ form_widget(excursionForm.place) }}<br>
 
-                <div class="form-group row" bis_skin_checked="1">
-    {{ form_start(excursionForm)}}
-            {{ form_widget(excursionForm) }}
+
             <button type="submit" class="btn btn-primary">Ajouter</button>
             {{ form_end(excursionForm)}}
+
+
+
         </div>
 
-        </form>
+
 
     {% endblock %}
 

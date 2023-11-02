@@ -63,6 +63,7 @@ class ExcursionController extends AbstractController
             $excursion->setOrganizer($this->getUser());
 
             //TODO Gérer l'Etat
+            $excursion->setState(19);
             $em->persist($excursion);
             $em->flush();
             return $this->redirectToRoute('/excursion/{id}/details', ['id'=> $excursion->getId()]);
