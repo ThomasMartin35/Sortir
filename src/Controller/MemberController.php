@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MemberController extends AbstractController
@@ -26,22 +27,34 @@ class MemberController extends AbstractController
     }
 
     #[Route('/member/{id}/update', name: 'member_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function update(Member $member, Request $request, EntityManagerInterface $em): Response
+    public function update(Member $member, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $HashedPassword): Response
     {
-        //TODO Don't forget the createAccessDeniedException
+        //Permet de récupérer l'utilisateur actuel
+        $user = $this->getUser();
+        //Condition pour ne pas autoriser la personne à modifier le profil.
+        if ($user === null || $user->getId() !== $member->getId()) {
+            throw $this->createAccessDeniedException('Vous n’êtes pas autorisé à modifier ce profil.');
+        }
+
         $memberUpdateForm = $this->createForm(MemberType::class, $member);
         $memberUpdateForm->handleRequest($request);
 
         if ($memberUpdateForm->isSubmitted() && $memberUpdateForm->isValid()) {
+            $plainPassword = $memberUpdateForm->get('password')->getData();
+            if (!empty($plainPassword)) {
+                $newhashedPassword = $HashedPassword->hashPassword($member, $plainPassword);
+                $member->setPassword($newhashedPassword);
+            }
             $em->persist($member);
             $em->flush();
-            return $this->redirectToRoute('member_details', ['id'=> $member->getId()]);
+            $em->refresh($member);
+            return $this->redirectToRoute('member_details', ['id' => $member->getId()]);
         }
-
-
         return $this->render('member/update.html.twig', [
             'member' => $member,
             'memberUpdateForm' => $memberUpdateForm
         ]);
     }
 }
+
+
