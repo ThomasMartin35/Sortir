@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Campus;
+use App\Entity\City;
+use App\Entity\Place;
 use App\Entity\Excursion;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,22 +14,30 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security;
 
 class ExcursionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom : '
             ])
             ->add('startDate', DateTimeType::class, [
-                'date_label' => 'Commence le',
+                "label" => "Date de l'événement :",
+                'date_label' => 'Commence le'
+
             ])
             ->add('duration', IntegerType::class, [
-                ])
+                "label" => "Durée :",
+            ])
+
             ->add('limitRegistrationDate',DateTimeType::class, [
-                'date_label' => 'Limite inscription',
+                'date_label' => 'Date limite d\'inscription',
+                'date_widget' => 'choice'
             ])
             ->add('maxRegistrationNumber', IntegerType::class, [
             ])
@@ -41,6 +51,13 @@ class ExcursionType extends AbstractType
                 'class' => Campus::class,
                 'choice_label' => 'name',
                 'placeholder'=> '--Choisir un campus--'
+            ])
+
+            ->add('ville', EntityType::class, [
+                'label'=> 'Ville : ',
+                'class' => City::class,
+                'choice_label' => 'name',
+                'placeholder'=> '--Choisir une ville--'
             ])
 
             // TODO ->add('place')
