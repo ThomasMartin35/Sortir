@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Excursion;
+use App\Form\ExcursionType;
 use App\Repository\ExcursionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,11 +35,30 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/excursion/create', name: 'excursion_create')]
-    public function create(): Response
+    #[Route('/excursion/create', name: 'excursion_create', methods: ['GET', 'POST'])]
+    // TODO Ajouter ISGranted ?
+
+    public function create(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response
     {
-        return $this->render('excursion/create.html.twig', [
-            'controller_name' => 'ExcursionController',
+        $excursion = new Excursion();
+        $excursionForm = $this->createForm(ExcursionType::class, $excursion);
+        $excursionForm -> handleRequest($request);
+
+        if ($excursionForm->isSubmitted() && $excursionForm->isValid()){
+            $excursion->setOrganizer($this->getUser());
+
+            //TODO Gérer l'Etat
+            $em->persist($excursion);
+            $em->flush();
+            return $this->redirectToRoute('/excursion/{id}/details', ['id'=> $excursion->getId()]);
+
+        }
+
+        return $this->render('\excursion\create.html.twig', [
+            'excursionForm' => $excursionForm
         ]);
     }
 

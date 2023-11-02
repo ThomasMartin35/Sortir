@@ -6,10 +6,10 @@
 
         <div class="row justify-content-around">
             {% for excursion in excursions %}
-                <a href="{{ path('excursion_details', {'id': excursion.id}) }}">
+
                 <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 " style="max-width: 20rem;"
                      bis_skin_checked="1">
-                    <div class="card-header" bis_skin_checked="1"><h3>{{ excursion.name }}</h3></div>
+                    <div class="card-header" bis_skin_checked="1"><a href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>  </a></div>
                     <div class="card-body" bis_skin_checked="1">
                         <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
                             à {{ excursion.startDate | date('H:i') }}. </h5>
@@ -18,7 +18,7 @@
                             : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
                     </div>
                 </div>
-                </a>
+
             {% else %}
                 <tr>
                     <td colspan="5">Aucune sortie dans la base</td>
