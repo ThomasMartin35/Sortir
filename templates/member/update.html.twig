@@ -5,7 +5,27 @@
     <h1>Modification du profil</h1>
 
     {{ form_start(memberUpdateForm) }}
-    {{ form_widget(memberUpdateForm) }}
+
+    {{ form_row(memberUpdateForm.pseudo) }}
+    {{ form_row(memberUpdateForm.name) }}
+    {{ form_row(memberUpdateForm.firstName) }}
+    {{ form_row(memberUpdateForm.phone) }}
+    {{ form_row(memberUpdateForm.mail) }}
+    {{ form_row(memberUpdateForm.password) }}
+    {{ form_row(memberUpdateForm.campus) }}
+    <div class="d-flex">
+        <div class="col-sm-9">
+            {{ form_row(memberUpdateForm.image) }}
+        </div>
+        <div class="col-sm-3">
+            {% if memberUpdateForm.vars.value.filename != null %}
+                <img src="{{ asset(app_images_member_directory ~ '/' ~ memberUpdateForm.vars.value.filename) }}"
+                     class="img-fluid" alt="photo de l'utilisateur">
+                {{ form_row(memberUpdateForm.deleteImage) }}
+            {% endif %}
+        </div>
+    </div>
+
 
     <button class="btn btn-success">Modifier</button>
     {{ form_end(memberUpdateForm) }}

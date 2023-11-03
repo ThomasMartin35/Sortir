@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
 {
-    public function __construct(private readonly string $targetDirectory) {
+    public function __construct(private readonly string $targetDirectory)
+    {
 
     }
 
-    public function upload(UploadedFile $file): string {
+    public function upload(UploadedFile $file): string
+    {
         //create an id for the fileName
         $fileName = uniqid() . '.' . $file->guessExtension();
 
@@ -23,9 +25,17 @@ class FileUploader
         return $fileName;
     }
 
-    public function getTargetDirectory():string {
+    public function getTargetDirectory(): string
+    {
         return $this->targetDirectory;
     }
 
+    public function delete(?string $fileName, string $rep): void
+    {
+        $filePath = $rep . '/' . $fileName;
+        if (null != $fileName && file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
 
 }

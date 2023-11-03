@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Member;
 use App\Form\MemberType;
 use App\Repository\MemberRepository;
+use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,11 @@ class MemberController extends AbstractController
     }
 
     #[Route('/member/{id}/update', name: 'member_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function update(Member $member, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $HashedPassword): Response
+    public function update(Member $member,
+                           Request $request,
+                           EntityManagerInterface $em,
+                           UserPasswordHasherInterface $HashedPassword,
+                           FileUploader $fileUploader): Response
     {
         //Permet de récupérer l'utilisateur actuel
         $user = $this->getUser();
@@ -46,6 +51,26 @@ class MemberController extends AbstractController
                 $newhashedPassword = $HashedPassword->hashPassword($member, $password);
                 $member->setPassword($newhashedPassword);
             }
+
+            //Traitement de l'image
+            $imageFile = $memberUpdateForm->get('image')->getData();
+            if (($memberUpdateForm->has('deleteImage') && $memberUpdateForm['deleteImage']->getData())
+            || $imageFile) {
+
+                //Suppression de l'ancienne image
+                $fileUploader->delete(
+                    $member->getFilename(),
+                    $this->getParameter('app.image_member_directory'));
+
+                //Ajout d'une nouvelle image
+                if ($imageFile) {
+                    $member->setFilename($fileUploader->upload($imageFile));
+                } else {
+                    $member->setFilename(null);
+                }
+
+            }
+
             $em->persist($member);
             $em->flush();
             $em->refresh($member);

@@ -2,7 +2,7 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_theme: 'bootstrap_5_layout.html.twig'
     globals:
-        app_images_member_directory: '/uploads/images/member'
+        app_images_member_directory: 'uploads/images/member'
 
 when@test:
     twig:
