@@ -10,20 +10,22 @@
             <h5 class="card-title">Nom : {{ member.name }}</h5>
             <h6 class="card-subtitle text-muted">Prénom : {{ member.firstname }}</h6>
         </div>
+
         {% if member.filename %}
             <img src="{{ asset(app_images_member_directory ~ '/' ~ member.filename) }}"
-                 class="card-img-top img-fluid" alt="Photo du membre">
+                 class="card-img-top img-fluid rounded mx-auto d-bloc" alt="Photo du membre">
         {% endif %}
+
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Téléphone : {{ member.phone }}</li>
             <li class="list-group-item">Email : {{ member.mail }}</li>
             <li class="list-group-item">{{ member.campus.name }}</li>
         </ul>
-        <div class="card-body" bis_skin_checked="1">
-            {% if app.user %}
-                <a href="{{ path('member_update', {'id': app.user.id}) }}" class="card-link">Modifier mon profil</a>
-            {% endif %}
-        </div>
+        {% if app.user == member or is_granted('ROLE_ADMIN') %}
+            <div class="card-body" bis_skin_checked="1">
+                <a href="{{ path('member_update', {'id': member.id}) }}" class="card-link">Modifier le profil</a>
+            </div>
+        {% endif %}
     </div>
 
     <div class="text-center">
