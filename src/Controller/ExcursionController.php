@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Excursion;
+use App\Entity\State;
 use App\Form\ExcursionType;
 use App\Form\FilterFormType;
 use App\Form\Model\FilterModel;
@@ -64,11 +65,18 @@ class ExcursionController extends AbstractController
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
             $excursion->setOrganizer($this->getUser());
 
-            //TODO Gérer l'Etat
-            $excursion->setState(19);
+            //TODO Gérer l'Etat avec conditions
+            $repo = $em->getRepository(State::class);
+
+
+            $state = $repo->find('19');
+
+            $excursion->setState($state);
+
+
             $em->persist($excursion);
             $em->flush();
-            return $this->redirectToRoute('/excursion/{id}/details', ['id' => $excursion->getId()]);
+            return $this->redirectToRoute('/');
 
         }
 
