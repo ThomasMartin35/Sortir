@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Campus;
+use App\Entity\City;
+use App\Entity\Place;
 use App\Entity\Excursion;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,27 +14,34 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security;
 
 class ExcursionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom : '
             ])
             ->add('startDate', DateTimeType::class, [
-                'date_label' => 'Commence le',
+                "label" => "Date de l'événement :",
+                'widget' => 'single_text',
             ])
             ->add('duration', IntegerType::class, [
-                ])
+                "label" => "Durée :",
+            ])
+
             ->add('limitRegistrationDate',DateTimeType::class, [
-                'date_label' => 'Limite inscription',
+                'label' => 'Date limite d\'inscription',
+                'widget' => 'single_text'
             ])
             ->add('maxRegistrationNumber', IntegerType::class, [
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Décrivez votre événement',
+                'label' => 'Décrivez votre événement : ',
                 'required' => false
              ])
 
@@ -43,7 +52,23 @@ class ExcursionType extends AbstractType
                 'placeholder'=> '--Choisir un campus--'
             ])
 
-            // TODO ->add('place')
+            ->add('city', EntityType::class, [
+                'label'=> 'Ville : ',
+                'mapped'=> false,
+                'class' => City::class,
+                'choice_label' => 'name',
+                'placeholder'=> '--Choisir une ville--'
+            ])
+
+            ->add('place', EntityType::class, [
+                'label'=> 'Lieu : ',
+                'mapped'=> false,
+                'class' => Place::class,
+                'choice_label' => 'name',
+                'placeholder'=> '--Choisir une ville--'
+            ])
+
+
         ;
     }
 
