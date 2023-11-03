@@ -123,6 +123,6 @@ class ExcursionController extends AbstractController
         $em->remove($excursion);
         $em->flush();
 
-        return $this->redirectToRoute('main_excursionList')
+        return $this->redirectToRoute('main_excursionList');
     }
 }
