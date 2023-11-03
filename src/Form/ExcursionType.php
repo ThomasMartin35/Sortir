@@ -64,7 +64,6 @@ class ExcursionType extends AbstractType
 
             ->add('place', EntityType::class, [
                 'label'=> 'Lieu : ',
-                'mapped'=> false,
                 'class' => Place::class,
                 'choice_label' => 'name',
                 'placeholder'=> '--Choisir une ville--'

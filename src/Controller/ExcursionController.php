@@ -76,7 +76,7 @@ class ExcursionController extends AbstractController
 
             $em->persist($excursion);
             $em->flush();
-            return $this->redirectToRoute('/');
+            return $this->redirectToRoute('main_excursionList');
 
         }
 
