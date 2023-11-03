@@ -99,11 +99,22 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/excursion/{id}/delete', name: 'excursion_delete')]
-    public function delete(): Response
+    #[Route('/excursion/{id}/delete', name: 'excursion_delete', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function delete(
+        Excursion              $excursion,
+        Request                $request,
+        EntityManagerInterface $em): Response
     {
-        return $this->render('excursion/delete.html.twig', [
-            'controller_name' => 'ExcursionController',
-        ]);
+        if ($excursion->getUser() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+//            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimé');
+        } else{
+            $this->addFlash('success', 'Le sortie a été supprimé');
+        }
+
+        $em->remove($excursion);
+        $em->flush();
+
+        return $this->redirectToRoute('main_excursionList')
     }
 }
