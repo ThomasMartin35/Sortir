@@ -25,13 +25,13 @@
         {{ form_label(excursionForm.place) }}
         {{ form_widget(excursionForm.place) }}<br>
 
-
-        <button type="submit" class="btn btn-primary">Modifier</button>
-        <button type="submit" class="btn btn-danger">Supprimer</button>
         {{ form_end(excursionForm)}}
 
-
-
     </div>
+
+    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
+        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+    {% endif %}
 
 {% endblock %}

@@ -70,10 +70,9 @@ class ExcursionController extends AbstractController
 
 
             $state = $repo->findOneBy(
-                ['caption' => 'Créée']);
+                ['caption' => 'Created']);
 
             $excursion->setState($state);
-
 
             $em->persist($excursion);
             $em->flush();
@@ -96,7 +95,10 @@ class ExcursionController extends AbstractController
         $excursionForm = $this->createForm(ExcursionType::class, $excursion);
         $excursionForm->handleRequest($request);
 
-        if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
+        if ($excursionForm->isSubmitted() && $excursionForm->isValid() and
+            $excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')
+            ){
+
             $em->persist($excursion);
             $em->flush();
             $this->addFlash('success', 'La sortie a été modifiée');
@@ -104,6 +106,7 @@ class ExcursionController extends AbstractController
         }
 
         return $this->render('excursion/update.html.twig', [
+            'excursion' => $excursion,
             'excursionForm' => $excursionForm
         ]);
     }
@@ -114,15 +117,20 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        if ($excursion->getOrganizer() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+        if ($excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')) {
+            $repo = $em->getRepository(State::class);
+            $state = $repo->findOneBy(
+                ['caption' => 'Canceled']);
+            $excursion->setState($state);
+            $em->persist($excursion);
+            $em->flush();
 //            throw $this->createAccessDeniedException();
-            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
-        } else{
-            $this->addFlash('success', 'La sortie a été supprimée');
-        }
 
-        $em->remove($excursion);
-        $em->flush();
+            $this->addFlash('success', 'La sortie a été supprimée');
+
+        } else {
+            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
+        }
 
         return $this->redirectToRoute('main_excursionList');
     }

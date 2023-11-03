@@ -20,11 +20,16 @@
                     <a class="nav-link" href="#">Campus</a>
                 </li>
                 {% endif %}
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Accueil</a>
                 </li>
 
                 {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('excursion_create', {'id': app.user.id}) }}" title="Créer une sortie">Créer une sortie</a>
+                    </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('member_details', {'id': app.user.id}) }}" title="Voir mon profil">Mon profil</a>
                 </li>
