@@ -77,7 +77,7 @@ class MemberType extends AbstractType
             if ($member && $member->getFilename()) {
                 $memberUpdateForm = $event->getForm();
                 $memberUpdateForm->add('deleteImage', CheckboxType::class, [
-                    'label' => "supprimer l'image",
+                    'label' => "supprimer la photo",
                     'required' => false,
                     'mapped' => false
                 ]);
