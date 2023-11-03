@@ -37,7 +37,7 @@ class MemberController extends AbstractController
             throw $this->createAccessDeniedException('Vous n’êtes pas autorisé à modifier ce profil.');
         }
 
-        $memberUpdateForm = $this->createForm(MemberType::class, $member);
+        $memberUpdateForm = $this->createForm(MemberType::class, $member, ['isEdit'=>true]);
         $memberUpdateForm->handleRequest($request);
 
         if ($memberUpdateForm->isSubmitted() && $memberUpdateForm->isValid()) {
