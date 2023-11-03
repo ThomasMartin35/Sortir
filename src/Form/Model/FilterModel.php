@@ -10,7 +10,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 class FilterModel
 {
     private Campus $selectedCampus;
-    private string $selectedWords= '';
+    private string $selectedWords;
     private \DateTime $selectedStartDate;
     private \DateTime $selectedEndDate;
     private Boolean $isOrganizer;
@@ -18,6 +18,12 @@ class FilterModel
     private Boolean $isNotRegistred;
     private Boolean $isFinished;
 
+
+    public function __construct()
+    {
+        $this->selectedWords = '';
+
+    }
 
     public function getSelectedCampus(): Campus
     {
