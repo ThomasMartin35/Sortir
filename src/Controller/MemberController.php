@@ -31,6 +31,7 @@ class MemberController extends AbstractController
     {
         //Permet de récupérer l'utilisateur actuel
         $user = $this->getUser();
+
         //Condition pour ne pas autoriser la personne à modifier le profil.
         if ($user === null || $user->getId() !== $member->getId()) {
             throw $this->createAccessDeniedException('Vous n’êtes pas autorisé à modifier ce profil.');
@@ -40,9 +41,9 @@ class MemberController extends AbstractController
         $memberUpdateForm->handleRequest($request);
 
         if ($memberUpdateForm->isSubmitted() && $memberUpdateForm->isValid()) {
-            $plainPassword = $memberUpdateForm->get('password')->getData();
-            if (!empty($plainPassword)) {
-                $newhashedPassword = $HashedPassword->hashPassword($member, $plainPassword);
+            $password = $memberUpdateForm->get('password')->getData();
+            if (!empty($password)) {
+                $newhashedPassword = $HashedPassword->hashPassword($member, $password);
                 $member->setPassword($newhashedPassword);
             }
             $em->persist($member);
