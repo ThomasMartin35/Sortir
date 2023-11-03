@@ -42,7 +42,6 @@ class ExcursionType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Décrivez votre événement',
-                'label' => 'Décrivez votre événement : ',
                 'required' => false
              ])
 
@@ -53,7 +52,6 @@ class ExcursionType extends AbstractType
                 'placeholder'=> '--Choisir un campus--'
             ])
 
-            // TODO ->add('place')
             ->add('city', EntityType::class, [
                 'label'=> 'Ville : ',
                 'mapped'=> false,
@@ -66,7 +64,7 @@ class ExcursionType extends AbstractType
                 'label'=> 'Lieu : ',
                 'class' => Place::class,
                 'choice_label' => 'name',
-                'placeholder'=> '--Choisir une ville--'
+                'placeholder'=> '--Choisir un lieu--'
             ])
 
 
