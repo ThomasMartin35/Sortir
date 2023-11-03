@@ -98,7 +98,7 @@ class ExcursionController extends AbstractController
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
             $em->persist($excursion);
             $em->flush();
-            $this->addFlash('success', 'La sortie a été modifé');
+            $this->addFlash('success', 'La sortie a été modifiée');
             return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
         }
 
@@ -115,9 +115,9 @@ class ExcursionController extends AbstractController
     {
         if ($excursion->getOrganizer() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
 //            throw $this->createAccessDeniedException();
-            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimé');
+            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
         } else{
-            $this->addFlash('success', 'Le sortie a été supprimé');
+            $this->addFlash('success', 'La sortie a été supprimée');
         }
 
         $em->remove($excursion);
