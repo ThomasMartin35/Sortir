@@ -39,10 +39,11 @@ class ExcursionType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('maxRegistrationNumber', IntegerType::class, [
+                'label' => 'Nombre maximum de participants'
+
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Décrivez votre événement',
-                'label' => 'Décrivez votre événement : ',
                 'required' => false
              ])
 
@@ -67,7 +68,7 @@ class ExcursionType extends AbstractType
                 'mapped'=> false,
                 'class' => Place::class,
                 'choice_label' => 'name',
-                'placeholder'=> '--Choisir une ville--'
+                'placeholder'=> '--Choisir un lieu--'
             ])
 
 

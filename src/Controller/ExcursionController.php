@@ -113,7 +113,7 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        if ($excursion->getUser() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+        if ($excursion->getOrganizer() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
 //            throw $this->createAccessDeniedException();
             $this->addFlash('danger', 'La sortie n\'a pas pu être supprimé');
         } else{
