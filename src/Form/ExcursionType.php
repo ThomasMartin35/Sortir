@@ -41,6 +41,7 @@ class ExcursionType extends AbstractType
             ->add('maxRegistrationNumber', IntegerType::class, [
             ])
             ->add('description', TextareaType::class, [
+                'label' => 'Décrivez votre événement',
                 'label' => 'Décrivez votre événement : ',
                 'required' => false
              ])
@@ -52,6 +53,7 @@ class ExcursionType extends AbstractType
                 'placeholder'=> '--Choisir un campus--'
             ])
 
+            // TODO ->add('place')
             ->add('city', EntityType::class, [
                 'label'=> 'Ville : ',
                 'mapped'=> false,

@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Campus;
 use App\Entity\Excursion;
+use App\Form\Model\FilterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<Excursion>
@@ -45,4 +49,46 @@ class ExcursionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+//    public function findExcursionByFilters( FilterModel $filterModel
+//    )
+//    {
+//        $queryBuilder = $this->createQueryBuilder('e');
+//
+//        if($filterModel->getSelectedWords()){
+//            $queryBuilder->andWhere("e.name LIKE :word")->setParameter("word", $filterModel->getSelectedWords());
+//        }
+//
+//        if($filterModel->getSelectedCampus()!== null){
+//            $queryBuilder->andWhere('e.campus = :selectedCampus')->setParameter("selectedCampus", $filterModel->getSelectedCampus());
+//        }
+//
+//        if ($filterModel->getSelectedStartDate()){
+//            $queryBuilder->andWhere('e.startDate >= :selectedStartDate')->setParameter("selectedStartDate", $filterModel->getSelectedStartDate());
+//        }
+//
+//        if ($filterModel->getSelectedEndDate()){
+//            $queryBuilder->andWhere('e.startDate <= :selectedEndDate')->setParameter("selectedEndDate", $filterModel->getSelectedEndDate());
+//        }
+//
+//        if ($filterModel->getIsOrganizer()){
+//            $queryBuilder->andWhere('e.organizer = :isOrganizer')->setParameter("isOrganizer", true);
+//        }
+//
+//        if ($filterModel->getIsRegistred()){
+//            $queryBuilder->andWhere('e.participants = :isRegistred')->setParameter("isRegistred", true);
+//        }
+//
+//        if ($filterModel->getIsNotRegistred()){
+//            $queryBuilder->andWhere('e.participants = :isNotRegistred')->setParameter("isRegistred", false);
+//        }
+//
+//        if($filterModel->getIsFinished()){
+//            $queryBuilder->andWhere('e.endDate <= :isFinished')->setParameter("isFinished", true);
+//        }
+//
+//        return $queryBuilder->getQuery()->getResult();
+//    }
+//
 }
+
