@@ -117,7 +117,13 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        if ($excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')) {
+        $excursionForm = $this->createForm(ExcursionType::class, $excursion);
+        $excursionForm->handleRequest($request);
+
+        if ($excursionForm->isSubmitted() && $excursionForm->isValid() and
+            $excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')
+        ){
+            $excursion->setDescription("reason");
             $repo = $em->getRepository(State::class);
             $state = $repo->findOneBy(
                 ['caption' => 'Canceled']);
@@ -132,6 +138,9 @@ class ExcursionController extends AbstractController
             $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
         }
 
-        return $this->redirectToRoute('main_excursionList');
+        return $this->render('excursion/delete.html.twig', [
+            'excursion' => $excursion,
+            'excursionForm' => $excursionForm
+        ]);
     }
 }
