@@ -69,7 +69,7 @@ class ExcursionController extends AbstractController
             $repo = $em->getRepository(State::class);
 
 
-            $state = $repo->find('19');
+            $state = $repo->find('25');
 
             $excursion->setState($state);
 
