@@ -54,7 +54,6 @@ class ExcursionType extends AbstractType
                 'placeholder'=> '--Choisir un campus--'
             ])
 
-            // TODO ->add('place')
             ->add('city', EntityType::class, [
                 'label'=> 'Ville : ',
                 'mapped'=> false,
@@ -65,7 +64,6 @@ class ExcursionType extends AbstractType
 
             ->add('place', EntityType::class, [
                 'label'=> 'Lieu : ',
-                'mapped'=> false,
                 'class' => Place::class,
                 'choice_label' => 'name',
                 'placeholder'=> '--Choisir un lieu--'

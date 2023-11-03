@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 #[ORM\Table(name: '`member`')]
@@ -22,9 +23,14 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'L\'adresse mail doit être renseignée.')]
     private ?string $mail = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le pseudo doit être renseigné.')]
+    #[Assert\Length(min: 2, max: 50,
+        minMessage: 'Le pseudo doit contenenir plus de 2 caractères',
+        maxMessage: 'Le pseudo doit contenir moins de 2 caractères')]
     private ?string $pseudo = null;
 
     #[ORM\Column]
@@ -37,9 +43,17 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le nom doit être renseigné.')]
+    #[Assert\Length(min: 2, max: 50,
+        minMessage: 'Le nom doit contenenir plus de 2 caractères',
+        maxMessage: 'Le nom doit contenir moins de 2 caractères')]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le prénom doit être renseigné.')]
+    #[Assert\Length(min: 2, max: 50,
+        minMessage: 'Le prénom doit contenenir plus de 2 caractères',
+        maxMessage: 'Le prénom doit contenir moins de 2 caractères')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 25, nullable: true)]
@@ -59,7 +73,11 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
+
     private ?Campus $campus = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $filename = null;
 
     public function __construct()
     {
@@ -103,7 +121,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->mail;
+        return (string)$this->mail;
     }
 
     /**
@@ -134,6 +152,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     // keep the old password instead of being null
+
     /**
      * Set password
      *
@@ -283,6 +302,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCampus(?Campus $campus): static
     {
         $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): static
+    {
+        $this->filename = $filename;
 
         return $this;
     }
