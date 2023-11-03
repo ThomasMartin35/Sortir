@@ -40,7 +40,7 @@ class MemberType extends AbstractType
                  'type' => PasswordType::class,
                  'invalid_message' => 'Les mots de passe ne correspondent pas, merci de réessayer.',
                  'options' => ['attr' => ['class' => 'password-field']],
-                 'required' => true,
+                 'required' => false,
                  'first_options'  => ['label' => 'Mot de Passe : '],
                  'second_options' => ['label' => 'Confirmation : '],
              ])
