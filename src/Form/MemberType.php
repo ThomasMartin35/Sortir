@@ -64,7 +64,7 @@ class MemberType extends AbstractType
                         'maxSize' => '1M',
                         'mimeTypes' => [
                             'image/png',
-                            'image/jpg',
+                            'image/jpeg',
                         ],
                         'mimeTypesMessage' => 'Merci de rajouter une image avec un format valide (PNG ou JPG)'
                     ])
@@ -77,7 +77,7 @@ class MemberType extends AbstractType
             if ($member && $member->getFilename()) {
                 $memberUpdateForm = $event->getForm();
                 $memberUpdateForm->add('deleteImage', CheckboxType::class, [
-                    'label' => "supprimer l'image : ",
+                    'label' => "supprimer l'image",
                     'required' => false,
                     'mapped' => false
                 ]);
