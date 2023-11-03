@@ -35,6 +35,10 @@
                         <p class="card-text">Date limite d'inscription
                             : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
                         <p> {{ excursion.campus.name }}</p>
+                        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge rounded-pill bg-warning">Modifier</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge rounded-pill bg-danger">Supprimer</a>
+                        {% endif %}
                     </div>
                 </div>
 

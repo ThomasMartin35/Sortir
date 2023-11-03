@@ -69,14 +69,14 @@ class ExcursionController extends AbstractController
             $repo = $em->getRepository(State::class);
 
 
-            $state = $repo->find('19');
+            $state = $repo->find('25');
 
             $excursion->setState($state);
 
 
             $em->persist($excursion);
             $em->flush();
-            return $this->redirectToRoute('/');
+            return $this->redirectToRoute('main_excursionList');
 
         }
 
@@ -113,7 +113,7 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        if ($excursion->getUser() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+        if ($excursion->getOrganizer() !== $this->getUser() && $this->isGranted('ROLE_ADMIN')) {
 //            throw $this->createAccessDeniedException();
             $this->addFlash('danger', 'La sortie n\'a pas pu être supprimé');
         } else{
