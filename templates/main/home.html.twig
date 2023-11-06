@@ -45,26 +45,26 @@
     <div class="row justify-content-around">
         {% for excursion in excursions %}
 
-            <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 cardHover" style="max-width: 20rem;"
-                 bis_skin_checked="1">
-                <div class="card-header" bis_skin_checked="1"><a
-                            href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>
-                    </a></div>
-                <div class="card-body" bis_skin_checked="1">
-                    <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
-                        à {{ excursion.startDate | date('H:i') }}. </h5>
-                    <p class="card-text"> Description : {{ excursion.description }}</p>
-                    <p class="card-text">Date limite d'inscription
-                        : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
-                    <p> {{ excursion.campus.name }}</p>
-                    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}"
-                           class="badge bg-warning">Modifier</a>
-                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}"
-                           class="badge bg-danger">Supprimer</a>
-                    {% endif %}
+                <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 cardHover" style="max-width: 20rem;"
+                     bis_skin_checked="1">
+                    <div class="card-header" bis_skin_checked="1"><a href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>  </a></div>
+                    <div class="card-body" bis_skin_checked="1">
+                        <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
+                            à {{ excursion.startDate | date('H:i') }}. </h5>
+                        <p class="card-text"> Description : {{ excursion.description }}</p>
+                        <p class="card-text">Date limite d'inscription
+                            : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
+                        <p> {{ excursion.campus.name }}</p>
+                        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+                        {% endif %}
+                        {% if app.user != excursion.organizer and excursion.limitRegistrationDate > date() %}
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">S'inscrire</a>
+                            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
 
         {% else %}
             <tr>
@@ -77,6 +77,7 @@
         <a class="btn btn-primary buttonCreateExcursion" href="{{ path('excursion_create', {'id': app.user.id}) }}"
            title="Créer une sortie">Créer une sortie</a>
     </div>
+
 
 {% endblock %}
 
