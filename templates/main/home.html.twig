@@ -27,6 +27,7 @@
             </form>
         </div>
 
+
         <div class="col-md-4">
             <div class="d-flex justify-content-end">
                 <div class="card border-primary mt-3 text-right cardInfo" style="max-width: 20rem;"
@@ -34,7 +35,9 @@
                     <div class="card-header" bis_skin_checked="1">Informations</div>
                     <div class="card-body" bis_skin_checked="1">
                         <h4 class="card-title">Date du jour : {{ 'now'|date('d / m / Y') }}</h4>
-                        <p class="card-text">Participant(e) : {{ app.user.pseudo }}</p>
+                        {% if app.user %}
+                            <p class="card-text">Participant(e) : {{ app.user.pseudo }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -73,10 +76,12 @@
         {% endfor %}
     </div>
 
+    {% if app.user %}
     <div>
         <a class="btn btn-primary buttonCreateExcursion" href="{{ path('excursion_create', {'id': app.user.id}) }}"
            title="Créer une sortie">Créer une sortie</a>
     </div>
+    {% endif %}
 
 
 {% endblock %}
