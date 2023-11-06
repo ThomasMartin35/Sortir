@@ -53,6 +53,9 @@ class Excursion
     #[ORM\ManyToOne(inversedBy: 'excursions')]
     private ?Place $place = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Reason = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -203,6 +206,18 @@ class Excursion
     public function setPlace(?Place $place): static
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getReason(): ?string
+    {
+        return $this->Reason;
+    }
+
+    public function setReason(?string $Reason): static
+    {
+        $this->Reason = $Reason;
 
         return $this;
     }

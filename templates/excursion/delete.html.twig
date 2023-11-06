@@ -6,30 +6,24 @@
 
     <div class="form-group " bis_skin_checked="1">
 
-        {{ form_start(excursionForm)}}
+        <p>Nom de la sortie : {{ excursion.name }} </p>
+        <p>Start date and time : {{ excursion.startDate | date('d M Y') }} à {{ excursion.startDate | date('H:i') }}</p>
+        <p>Campus : {{ excursion.campus.name }}</p>
+        <p>Lieu : {{ excursion.place.name}} </p>
+        <p>Descriptions et infos : {{ excursion.description }}</p>
 
-        {{ form_label(excursionForm.name) }}
-        {{ form_widget(excursionForm.name, {'attr': {'disabled': 'disabled'}}) }}<br>
+        {{ form_start(deleteExcursionForm) }}
 
-        {{ form_label(excursionForm.startDate) }}
-        {{ form_widget(excursionForm.startDate, {'attr': {'disabled': 'disabled'}}) }}<br>
+        {{ form_label(deleteExcursionForm.reason) }}
+        {{ form_widget(deleteExcursionForm.reason) }}
+        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        {% endif %}
 
-        <!-- ajouter le campus par défaut du user -->
-        {{ form_label(excursionForm.campus) }}
-        {{ form_widget(excursionForm.campus, {'attr': {'disabled': 'disabled'}}) }}<br>
-
-        {{ form_label(excursionForm.place) }}
-        {{ form_widget(excursionForm.place, {'attr': {'disabled': 'disabled'}}) }}<br>
-
-        {{ form_label(excursionForm.description) }}
-        {{ form_widget(excursionForm.description) }}<br>
-
-        {{ form_end(excursionForm, {'render_rest': false}) }}
+        {{ form_end(deleteExcursionForm) }}
 
 
     </div>
 
-    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('main_excursionList', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
-    {% endif %}
+
 {% endblock %}

@@ -4,6 +4,7 @@
 {% block body %}
     <h1>Modifier la sortie</h1>
     <div class="form-group " bis_skin_checked="1">
+
         {{ form_start(excursionForm)}}
         {{ form_label(excursionForm.name) }}
         {{ form_widget(excursionForm.name) }}<br>
@@ -25,13 +26,15 @@
         {{ form_label(excursionForm.place) }}
         {{ form_widget(excursionForm.place) }}<br>
 
+        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+            <button type="submit" class="btn btn-primary">Modifier</button>
+{#            <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>#}
+            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+        {% endif %}
+
         {{ form_end(excursionForm)}}
 
     </div>
 
-    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
-        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
-    {% endif %}
 
 {% endblock %}
