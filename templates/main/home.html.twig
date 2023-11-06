@@ -58,14 +58,31 @@
                         <p class="card-text">Date limite d'inscription
                             : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
                         <p> {{ excursion.campus.name }}</p>
-                        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
-                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+
+                        {% if is_granted('EXCURSION_VIEW', excursion) %}
+                        <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
                         {% endif %}
-                        {% if app.user != excursion.organizer and excursion.limitRegistrationDate > date() %}
+
+                        {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
+                            <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Annuler</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-danger">Publier</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
                             <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">S'inscrire</a>
-                            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
                         {% endif %}
+
+                        {% if is_granted('EXCURSION_UNSUBSCRIBE', excursion) %}
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                        {% endif %}
+
+
+
                     </div>
                 </div>
 

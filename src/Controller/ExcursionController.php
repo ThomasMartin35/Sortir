@@ -93,6 +93,9 @@ class ExcursionController extends AbstractController
         Request $request,
         EntityManagerInterface $em
     ): Response {
+
+        //TODO Clean code
+        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH',$excursion);
         $excursion = $em->getRepository(Excursion::class)->find($id);
 
         if (!($excursion->getOrganizer() === $this->getUser() || $this->isGranted('ROLE_ADMIN'))) {
@@ -118,10 +121,14 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/delete', name: 'excursion_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function delete(
+
         Excursion              $excursion,
         Request                $request,
         EntityManagerInterface $em): Response
     {
+        //TODO Clean code
+        $this->denyAccessUnlessGranted('EXCURSION_VIEW_CANCEL',$excursion);
+
         $deleteExcursionForm = $this->createForm(DeleteExcursionType::class, $excursion);
         $deleteExcursionForm->handleRequest($request);
 
