@@ -31,6 +31,9 @@ h1, h2 {
 .card-img-top {
     width: 25%;
 }
+.red-text{
+    color:red;
+}
 
 .cardHover {
     transition: transform .15s;
@@ -45,5 +48,9 @@ h1, h2 {
 .connectedMember, .currentDate {
     text-align: right;
     font-size: 1.2em;
+    margin : 1%;
+}
+
+.buttonCreateExcursion {
     margin : 1%;
 }

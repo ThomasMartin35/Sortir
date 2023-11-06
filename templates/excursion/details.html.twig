@@ -13,7 +13,13 @@
     <p>Date limite d'inscription : {{ excursion.limitRegistrationDate | date('d M Y') }}</p>
     <p>Nombre de place : {{ excursion.maxRegistrationNumber }}</p>
     <p>Durée : {{ excursion.duration }} minutes</p>
-    <p>Descriptions et infos : {{ excursion.description }}</p>
+        <p class="{% if excursion.state.caption == 'Canceled' %}red-text{% endif %}">Descriptions et infos : {{ excursion.description }}</p>
+
+
+        {% if excursion.state.caption == 'Canceled' and excursion.reason is defined and excursion.reason is not empty %}
+            <p class="red-text">Motif : {{ excursion.reason }}</p>
+        {% endif %}
+
     </div>
     <div class="detailsColumn">
     <p>Campus : {{ excursion.campus.name }}</p>
@@ -22,6 +28,8 @@
     <p>Code postal : {{ excursion.place.city.postcode }}</p>
     <p>latitude : {{ excursion.place.latitude }}</p>
     <p>longitude : {{ excursion.place.longitude }}</p>
+
+
     </div>
     </div>
 

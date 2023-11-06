@@ -7,6 +7,7 @@ use App\Entity\State;
 use App\Form\ExcursionType;
 use App\Form\FilterFormType;
 use App\Form\Model\FilterModel;
+use App\Form\DeleteExcursionType;
 use App\Repository\ExcursionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -87,18 +88,21 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/update', name: 'excursion_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function update(
-        Excursion              $excursion,
-        Request                $request,
+        int $id,
+        Excursion $excursion,
+        Request $request,
         EntityManagerInterface $em
-    ): Response
-    {
+    ): Response {
+        $excursion = $em->getRepository(Excursion::class)->find($id);
+
+        if (!($excursion->getOrganizer() === $this->getUser() || $this->isGranted('ROLE_ADMIN'))) {
+            return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
+        }
+
         $excursionForm = $this->createForm(ExcursionType::class, $excursion);
         $excursionForm->handleRequest($request);
 
-        if ($excursionForm->isSubmitted() && $excursionForm->isValid() and
-            $excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')
-            ){
-
+        if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
             $em->persist($excursion);
             $em->flush();
             $this->addFlash('success', 'La sortie a été modifiée');
@@ -111,19 +115,22 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/excursion/{id}/delete', name: 'excursion_delete', requirements: ['id' => '\d+'], methods: ['GET'])]
+
+    #[Route('/excursion/{id}/delete', name: 'excursion_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function delete(
         Excursion              $excursion,
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        $excursionForm = $this->createForm(ExcursionType::class, $excursion);
-        $excursionForm->handleRequest($request);
+        $deleteExcursionForm = $this->createForm(DeleteExcursionType::class, $excursion);
+        $deleteExcursionForm->handleRequest($request);
 
-        if ($excursionForm->isSubmitted() && $excursionForm->isValid() and
+        if ($deleteExcursionForm->isSubmitted() && $deleteExcursionForm->isValid() and
             $excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')
         ){
-            $excursion->setDescription("reason");
+            $reason = $deleteExcursionForm->get('reason')->getData();
+            $excursion->setDescription("SORTIE ANNULEE");
+            $excursion->setReason($reason);
             $repo = $em->getRepository(State::class);
             $state = $repo->findOneBy(
                 ['caption' => 'Canceled']);
@@ -133,14 +140,13 @@ class ExcursionController extends AbstractController
 //            throw $this->createAccessDeniedException();
 
             $this->addFlash('success', 'La sortie a été supprimée');
-
         } else {
             $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
         }
 
         return $this->render('excursion/delete.html.twig', [
             'excursion' => $excursion,
-            'excursionForm' => $excursionForm
+            'deleteExcursionForm' => $deleteExcursionForm
         ]);
     }
 }
