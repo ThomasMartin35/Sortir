@@ -6,7 +6,6 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="mb-3">Filtrer les sorties</h1>
-            <form>
                 {{ form_start(filterForm) }}
                 {{ form_row(filterForm.selectedCampus) }}
                 {{ form_row(filterForm.selectedWords) }}
@@ -23,8 +22,8 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Rechercher</button>
-                {{ form_end(filterForm) }}
-            </form>
+            {{ form_end(filterForm) }}
+
         </div>
 
 
@@ -63,8 +62,8 @@
                         <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
                         {% endif %}
                         {% if app.user != excursion.organizer and excursion.limitRegistrationDate > date() %}
-                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">S'inscrire</a>
-                            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-primary">S'inscrire</a>
+                            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-info">Se désister</a>
                         {% endif %}
                     </div>
                 </div>

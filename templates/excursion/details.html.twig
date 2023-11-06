@@ -9,7 +9,7 @@
     <div class="detailsContainer">
     <div class="detailsColumn">
     <p>Nom de la sortie : {{ excursion.name }} </p>
-    <p>Start date and time : {{ excursion.startDate | date('d M Y') }} à {{ excursion.startDate | date('H:i') }}</p>
+    <p>Date et heure de la sortie : {{ excursion.startDate | date('d M Y') }} à {{ excursion.startDate | date('H:i') }}</p>
     <p>Date limite d'inscription : {{ excursion.limitRegistrationDate | date('d M Y') }}</p>
     <p>Nombre de place : {{ excursion.maxRegistrationNumber }}</p>
     <p>Durée : {{ excursion.duration }} minutes</p>
@@ -33,9 +33,9 @@
     </div>
     </div>
 
-    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
-        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') and excursion.state.caption is not same as 'canceled' %}
+        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-warning">Modifier</a>
+        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
     {% endif %}
     <h2>Liste des participants</h2>
 
