@@ -39,6 +39,10 @@
                         <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
                         <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
                         {% endif %}
+                        {% if app.user != excursion.organizer and excursion.limitRegistrationDate > date() %}
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">S'inscrire</a>
+                            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                        {% endif %}
                     </div>
                 </div>
 
