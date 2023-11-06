@@ -28,21 +28,21 @@ class MemberController extends AbstractController
     }
 
     #[Route('/member/{id}/update', name: 'member_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function update(Member $member,
-                           Request $request,
-                           EntityManagerInterface $em,
+    public function update(Member                      $member,
+                           Request                     $request,
+                           EntityManagerInterface      $em,
                            UserPasswordHasherInterface $HashedPassword,
-                           FileUploader $fileUploader): Response
+                           FileUploader                $fileUploader): Response
     {
         //Permet de récupérer l'utilisateur actuel
         $user = $this->getUser();
 
         //Condition pour ne pas autoriser la personne à modifier le profil.
-        if ($user === null || $user->getId() !== $member->getId()) {
+        if ($user === null || ($user->getId() !== $member->getId() && !$this->isGranted('ROLE_ADMIN'))) {
             throw $this->createAccessDeniedException('Vous n’êtes pas autorisé à modifier ce profil.');
         }
 
-        $memberUpdateForm = $this->createForm(MemberType::class, $member, ['isEdit'=>true]);
+        $memberUpdateForm = $this->createForm(MemberType::class, $member, ['isEdit' => true]);
         $memberUpdateForm->handleRequest($request);
 
         if ($memberUpdateForm->isSubmitted() && $memberUpdateForm->isValid()) {
@@ -55,7 +55,7 @@ class MemberController extends AbstractController
             //Traitement de l'image
             $imageFile = $memberUpdateForm->get('image')->getData();
             if (($memberUpdateForm->has('deleteImage') && $memberUpdateForm['deleteImage']->getData())
-            || $imageFile) {
+                || $imageFile) {
 
                 //Suppression de l'ancienne image
                 $fileUploader->delete(
@@ -68,7 +68,6 @@ class MemberController extends AbstractController
                 } else {
                     $member->setFilename(null);
                 }
-
             }
 
             $em->persist($member);

@@ -14,18 +14,17 @@
     {{ form_row(memberUpdateForm.password) }}
     {{ form_row(memberUpdateForm.campus) }}
     <div class="d-flex">
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             {{ form_row(memberUpdateForm.image) }}
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             {% if memberUpdateForm.vars.value.filename != null %}
                 <img src="{{ asset(app_images_member_directory ~ '/' ~ memberUpdateForm.vars.value.filename) }}"
-                     class="img-fluid" alt="photo de l'utilisateur">
+                     class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
                 {{ form_row(memberUpdateForm.deleteImage) }}
             {% endif %}
         </div>
     </div>
-
 
     <button class="btn btn-success">Modifier</button>
     {{ form_end(memberUpdateForm) }}
