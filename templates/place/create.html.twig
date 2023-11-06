@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} | Place Create{% endblock %}
+
+{% block body %}
+    <h1>Créer un lieu</h1>
+
+    <div class="form-group " bis_skin_checked="1">
+        {{ form_start(placeForm)}}
+        {{ form_label(placeForm.name) }}
+        {{ form_widget(placeForm.name) }}<br>
+        {{ form_label(placeForm.street) }}
+        {{ form_widget(placeForm.street) }}<br>
+        {{ form_label(placeForm.latitude) }}
+        {{ form_widget(placeForm.latitude) }}<br>
+        {{ form_label(placeForm.longitude) }}
+        {{ form_widget(placeForm.longitude) }}<br>
+        {{ form_label(placeForm.city) }}
+        {{ form_widget(placeForm.city) }}<br>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+
+
+        {{ form_end(placeForm)}}
+    </div>
+
+
+
+{% endblock %}
+
