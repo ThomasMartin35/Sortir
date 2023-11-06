@@ -50,6 +50,7 @@ class MemberController extends AbstractController
             if (!empty($password)) {
                 $newhashedPassword = $HashedPassword->hashPassword($member, $password);
                 $member->setPassword($newhashedPassword);
+                $this->addFlash('success', 'Le mot de passe a bien été modifié');
             }
 
             //Traitement de l'image
@@ -62,9 +63,11 @@ class MemberController extends AbstractController
                     $member->getFilename(),
                     $this->getParameter('app.image_member_directory'));
 
+
                 //Ajout d'une nouvelle image
                 if ($imageFile) {
                     $member->setFilename($fileUploader->upload($imageFile));
+                    $this->addFlash('success', 'La photo a bien été changée');
                 } else {
                     $member->setFilename(null);
                 }
@@ -72,6 +75,8 @@ class MemberController extends AbstractController
 
             $em->persist($member);
             $em->flush();
+            $this->addFlash('success', 'Le profil a bien été modifié');
+
             $em->refresh($member);
             return $this->redirectToRoute('member_details', ['id' => $member->getId()]);
         }

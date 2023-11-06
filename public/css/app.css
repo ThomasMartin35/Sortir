@@ -34,3 +34,23 @@ h1, h2 {
 .red-text{
     color:red;
 }
+
+.cardHover {
+    transition: transform .15s;
+}
+
+.cardHover:hover {
+    -ms-transform: scale(1.08); /* IE 9 */
+    -webkit-transform: scale(1.08); /* Safari 3-8 */
+    transform: scale(1.08);
+}
+
+.connectedMember, .currentDate {
+    text-align: right;
+    font-size: 1.2em;
+    margin : 1%;
+}
+
+.buttonCreateExcursion {
+    margin : 1%;
+}

@@ -24,7 +24,7 @@ class PlaceController extends AbstractController
 
     public function create(
         Request                $request,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     ): Response
     {
         $place = new Place();
