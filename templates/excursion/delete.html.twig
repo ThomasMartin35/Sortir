@@ -18,6 +18,7 @@
         {{ form_widget(deleteExcursionForm.reason) }}
         {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
             <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="btn btn-danger" >Annuler</a>
         {% endif %}
 
         {{ form_end(deleteExcursionForm) }}

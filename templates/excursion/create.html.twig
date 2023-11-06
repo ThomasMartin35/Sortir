@@ -35,7 +35,9 @@
                 >
             </a></div>
 
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="submit" name="Created" value="Created" class="btn btn-primary">Enregistrer</button>
+            <button type="submit" name="Opened" value="Opened" class="btn btn-success">Publier</button>
+            <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="btn btn-danger" >Annuler</a>
             {{ form_end(excursionForm)}}
 
         </div>
