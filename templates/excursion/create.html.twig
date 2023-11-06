@@ -28,15 +28,17 @@
             {{ form_label(excursionForm.place) }}
             {{ form_widget(excursionForm.place) }}<br>
 
+            <div> Ajouter un lieu
+            <a href="{{ path('place_create') }}" title="Ajouter un lieu">
+                <img src="{{ asset('img/Plus.png') }}"
+                     alt="Plus" height="50px"
+                >
+            </a></div>
 
             <button type="submit" class="btn btn-primary">Ajouter</button>
             {{ form_end(excursionForm)}}
 
-
-
         </div>
-
-
 
     {% endblock %}
 
