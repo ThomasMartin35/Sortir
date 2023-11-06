@@ -71,7 +71,7 @@ class ExcursionController extends AbstractController
 
 
             $state = $repo->findOneBy(
-                ['caption' => 'Created']);
+                ['caption' => 'Opened']);
 
             $excursion->setState($state);
 

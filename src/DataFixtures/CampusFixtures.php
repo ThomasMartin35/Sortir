@@ -24,9 +24,6 @@ class CampusFixtures extends Fixture
 
         $manager->flush();
 
-        $this->addReference('campusRennes', $rennes);
-        $this->addReference('campusNantes', $nantes);
-        $this->addReference('campusRoche', $roche);
     }
 
 }
