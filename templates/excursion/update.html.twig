@@ -27,9 +27,10 @@
         {{ form_widget(excursionForm.place) }}<br>
 
         {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-            <button type="submit" class="btn btn-primary">Modifier</button>
-{#            <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>#}
-            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Supprimer</a>
+            <button type="submit" name="Created" value="Created" class="btn btn-primary">Enregistrer</button>
+            <button type="submit" name="Opened" value="Opened" class="btn btn-success">Publier</button>
+            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
+            <a class="btn btn-warning" href="{{ path('main_excursionList') }}" title="Ajouter un lieu">Annuler</a>
         {% endif %}
 
         {{ form_end(excursionForm)}}

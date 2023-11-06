@@ -25,11 +25,12 @@ class CityFixtures extends Fixture
         $roche->setPostcode('85000');
         $manager->persist($roche);
 
-        $manager->flush();
+        $rennes = new City();
+        $rennes->setName('RENNES');
+        $rennes->setPostcode('35000');
+        $manager->persist($rennes);
 
-        $this->addReference('chartres', $chartres);
-        $this->addReference('nantes', $nantes);
-        $this->addReference('roche', $roche);
+        $manager->flush();
 
     }
 

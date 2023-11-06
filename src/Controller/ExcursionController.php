@@ -23,14 +23,18 @@ class ExcursionController extends AbstractController
         $filterModel = new FilterModel();
         $filterForm = $this->createForm(FilterFormType::class, $filterModel);
         $filterForm->handleRequest($request);
+        dump($filterModel);
 
-//        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
-//
-//        }
+        if($filterForm->isSubmitted()){
 
-//        $excursions = $excursionRepository->findExcursionByFilters($filterModel);
+            dump('ici');
+            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
+        }else{
+            dump('la');
+            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
+        }
 
-        $excursions = $excursionRepository->findAll();
+
         dump($excursions);
         return $this->render('main/home.html.twig', [
             'excursions' => $excursions,
@@ -69,9 +73,15 @@ class ExcursionController extends AbstractController
             //TODO Gérer l'Etat avec conditions
             $repo = $em->getRepository(State::class);
 
-
-            $state = $repo->findOneBy(
-                ['caption' => 'Created']);
+            if (isset($_POST['Created'])) {
+                $state = $repo->findOneBy(
+                    ['caption' => 'Created']);
+            }
+            if
+            (isset($_POST['Opened'])) {
+                $state = $repo->findOneBy(
+                    ['caption' => 'Opened']);
+            }
 
             $excursion->setState($state);
 
@@ -88,9 +98,9 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/update', name: 'excursion_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function update(
-        int $id,
-        Excursion $excursion,
-        Request $request,
+        int                    $id,
+        Excursion              $excursion,
+        Request                $request,
         EntityManagerInterface $em
     ): Response {
 
@@ -106,6 +116,22 @@ class ExcursionController extends AbstractController
         $excursionForm->handleRequest($request);
 
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
+
+            //TODO Gérer l'Etat avec conditions
+            $repoUpdated = $em->getRepository(State::class);
+
+            if (isset($_POST['Created'])) {
+                $state = $repoUpdated->findOneBy(
+                    ['caption' => 'Created']);
+            }
+            if
+            (isset($_POST['Opened'])) {
+                $state = $repoUpdated->findOneBy(
+                    ['caption' => 'Opened']);
+            }
+
+            $excursion->setState($state);
+
             $em->persist($excursion);
             $em->flush();
             $this->addFlash('success', 'La sortie a été modifiée');
@@ -134,7 +160,7 @@ class ExcursionController extends AbstractController
 
         if ($deleteExcursionForm->isSubmitted() && $deleteExcursionForm->isValid() and
             $excursion->getOrganizer() === $this->getUser() or $this->isGranted('ROLE_ADMIN')
-        ){
+        ) {
             $reason = $deleteExcursionForm->get('reason')->getData();
             $excursion->setDescription("SORTIE ANNULEE");
             $excursion->setReason($reason);
@@ -146,9 +172,12 @@ class ExcursionController extends AbstractController
             $em->flush();
 //            throw $this->createAccessDeniedException();
 
-            $this->addFlash('success', 'La sortie a été supprimée');
-        } else {
-            $this->addFlash('danger', 'La sortie n\'a pas pu être supprimée');
+            if (!empty($reason)) {
+                $this->addFlash('success', 'La sortie a été supprimée');
+                return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
+            }
+
+
         }
 
         return $this->render('excursion/delete.html.twig', [

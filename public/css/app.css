@@ -6,7 +6,7 @@ a{
     justify-content: flex-end !important;
 }
 h1, h2 {
-    color: tomato;
+    color: #18bc9c;
     margin-bottom: 3px;
     margin-top: 3px;
 
@@ -32,7 +32,7 @@ h1, h2 {
     width: 25%;
 }
 .red-text{
-    color:red;
+    color:tomato;
 }
 
 .cardHover {

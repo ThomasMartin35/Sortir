@@ -11,7 +11,7 @@ class StateFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $created = new State();
-        $created->setCaption('Créée');
+        $created->setCaption('Created');
         $manager->persist($created);
 
         $opened = new State();
@@ -42,7 +42,6 @@ class StateFixtures extends Fixture
         $this->addReference('inProgress', $inProgress);
         $this->addReference('finished', $finished);
         $this->addReference('canceled', $canceled);
-
 
     }
 

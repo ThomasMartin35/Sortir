@@ -6,7 +6,6 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="mb-3">Filtrer les sorties</h1>
-            <form>
                 {{ form_start(filterForm) }}
                 {{ form_row(filterForm.selectedCampus) }}
                 {{ form_row(filterForm.selectedWords) }}
@@ -23,8 +22,8 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Rechercher</button>
-                {{ form_end(filterForm) }}
-            </form>
+            {{ form_end(filterForm) }}
+
         </div>
 
 
