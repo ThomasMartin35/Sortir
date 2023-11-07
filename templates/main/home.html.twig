@@ -70,7 +70,7 @@
                         {% endif %}
                     </p>
                     <p> {{ excursion.campus.name }}</p>
-                    <p>{{ excursion.organizer.pseudo }}</p>
+                    <p>Sortie proposée par <a href="{{ path('member_details', {'id' : excursion.organizer.id}) }}"> {{ excursion.organizer.pseudo }}</a></p>
 
                     {% if is_granted('EXCURSION_VIEW', excursion) %}
                         <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
