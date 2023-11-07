@@ -16,7 +16,8 @@
             {{ form_widget(excursionForm.startDate) }}
             {{ form_errors(excursionForm.startDate) }}<br>
             {{ form_label(excursionForm.limitRegistrationDate) }}
-            {{ form_widget(excursionForm.limitRegistrationDate) }}<br>
+            {{ form_widget(excursionForm.limitRegistrationDate) }}
+            {{ form_errors(excursionForm.limitRegistrationDate) }}<br>
             {{ form_label(excursionForm.maxRegistrationNumber) }}
             {{ form_widget(excursionForm.maxRegistrationNumber) }}<br>
             {{ form_label(excursionForm.duration) }}
@@ -25,7 +26,8 @@
             {{ form_widget(excursionForm.description) }}<br>
             <!-- ajouter le campus par défaut du user -->
             {{ form_label(excursionForm.campus) }}
-            {{ form_widget(excursionForm.campus) }}<br>
+            {{ form_widget(excursionForm.campus) }}
+            {{ form_errors(excursionForm.campus) }}<br>
             {{ form_label(excursionForm.city) }}
             {{ form_widget(excursionForm.city) }}<br>
             {{ form_label(excursionForm.place) }}

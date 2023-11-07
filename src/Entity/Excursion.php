@@ -23,13 +23,14 @@ class Excursion
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Assert\GreaterThan("today", message: 'La date doit être supérieur à aujourd\'hui.')]
+    #[Assert\GreaterThan("today", message: 'La date doit être supérieure à aujourd\'hui.')]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\LessThan(propertyPath: 'startDate', message: 'La date de fin d\'inscription doit être inférieure à la date de la sortie')]
     private ?\DateTimeInterface $limitRegistrationDate = null;
 
     #[ORM\Column(nullable: true)]
@@ -47,6 +48,7 @@ class Excursion
 
     #[ORM\ManyToOne(inversedBy: 'excursions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner ce champs')]
     private ?Campus $campus = null;
 
     #[ORM\ManyToOne(inversedBy: 'excursions')]

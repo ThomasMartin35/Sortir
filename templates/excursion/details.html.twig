@@ -25,16 +25,16 @@
 
         <div class="detailsColumn">
             <p>Campus : {{ excursion.campus.name }}</p>
-            <p>Lieu : {{ excursion.place.name }} </p>
-            <p>Rue : {{ excursion.place.street }}</p>
-            <p>Code postal : {{ excursion.place.city.postcode }}</p>
-            <p>Latitude : {{ excursion.place.latitude }}</p>
-            <p>Longitude : {{ excursion.place.longitude }}</p>
+            <p>Lieu : {{ excursion.place ? excursion.place.name : "" }} </p>
+            <p>Rue : {{ excursion.place ? excursion.place.street : ""}}</p>
+            <p>Code postal : {{ excursion.place ? excursion.place.city.postcode :"" }}</p>
+            <p>Latitude : {{ excursion.place ? excursion.place.latitude : ""}}</p>
+            <p>Longitude : {{ excursion.place ? excursion.place.latitude : ""}}</p>
 
 
         </div>
     </div>
-<br> <p>Progression des inscriptions</p>
+    <br> <p>Progression des inscriptions</p>
 
     <div class="progress" bis_skin_checked="1">
         <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (excursion.participants.count/ excursion.maxRegistrationNumber)*100}}%;" aria-valuenow=" {{ excursion.participants.count }} " aria-valuemin="0" aria-valuemax="{{ excursion.maxRegistrationNumber }}" bis_skin_checked="1"></div>
@@ -46,9 +46,9 @@
         <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
     {% endif %}
 
-        {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
-            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Annuler</a>
-        {% endif %}
+    {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
+        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Annuler</a>
+    {% endif %}
 
     {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
         <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-info">S'inscrire</a>
@@ -58,7 +58,7 @@
         <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Se désister</a>
     {% endif %}
 
-<br><br>
+    <br><br>
     <h2>Liste des participants</h2><br>
 
     <table class="table table-hover">
@@ -68,16 +68,16 @@
             <td>Nom</td>
         </tr>
         {% if excursion.participants|length > 0 %}
-        {% for participant in excursion.participants %}
-            <tr>
-                <td><a href="{{ path('member_details', {'id' : participant.id}) }}"> {{ participant.pseudo }}</a></td>
-                <td> {{ participant.name }} </td>
-            </tr>
-        {% endfor %}
+            {% for participant in excursion.participants %}
+                <tr>
+                    <td><a href="{{ path('member_details', {'id' : participant.id}) }}"> {{ participant.pseudo }}</a></td>
+                    <td> {{ participant.name }} </td>
+                </tr>
+            {% endfor %}
         {% else %}
-        <tr>
-            <td>Il n'y a pas de participants</td>
-        </tr>
+            <tr>
+                <td>Il n'y a pas de participants</td>
+            </tr>
         {% endif %}
         </tbody>
     </table>
