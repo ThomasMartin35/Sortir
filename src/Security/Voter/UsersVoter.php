@@ -4,6 +4,8 @@ namespace App\Security\Voter;
 
 use App\Entity\Excursion;
 use App\Entity\Member;
+use App\Entity\State;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -92,24 +94,23 @@ class UsersVoter extends Voter
 
     private function canSubscribe(Excursion $excursion, Member $user): bool{
         if (($excursion->getState()->getCaption() == 'Opened')
-            && ($user !== $excursion->getOrganizer()) ){
+            && ($excursion->getLimitRegistrationDate() < new \DateTime())
+            && ($excursion->getMaxRegistrationNumber() < $excursion->getParticipants()->count() )
+            && ($user !== $excursion->getOrganizer())
+            && (!$excursion->getParticipants()->contains($user)) ){
             return true;
         }
         return false;
     }
 
-    // Si pas org + opened
-    // + nbLimit pas atteint +
-    // datelimite pas atteinte + Pas participant +
 
 
     private function canUnsubscribe(Excursion $excursion, Member $user): bool{
-        if ($excursion->getStartDate() >= new \DateTime()){
+
+        if (($excursion->getStartDate() >= new \DateTime()) && ($excursion->getParticipants()->contains($user))) {
             return true;
         }
-        return false;
+            return false;
     }
-
-    // Si je suis participant et que la date de début de sortie n'est pas passée
 
 }

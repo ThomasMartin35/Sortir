@@ -3,44 +3,46 @@
 namespace App\Controller;
 
 use App\Entity\Excursion;
+use App\Entity\Member;
 use App\Entity\State;
 use App\Form\ExcursionType;
 use App\Form\FilterFormType;
 use App\Form\Model\FilterModel;
 use App\Form\DeleteExcursionType;
 use App\Repository\ExcursionRepository;
+use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 class ExcursionController extends AbstractController
 {
     #[Route('/', name: 'main_excursionList')]
-    public function list(ExcursionRepository $excursionRepository, Request $request): Response
+    public function list(ExcursionRepository $excursionRepository, Request $request, StateRepository $stateRepository): Response
     {
+        $currentUser = $this->getUser();
         $filterModel = new FilterModel();
         $filterForm = $this->createForm(FilterFormType::class, $filterModel);
         $filterForm->handleRequest($request);
         dump($filterModel);
 
-        if($filterForm->isSubmitted()){
-
+        if ($filterForm->isSubmitted()) {
             dump('ici');
-            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
-        }else{
+            $excursions = $excursionRepository->findExcursionByFilters($filterModel, $currentUser, $stateRepository);
+        } else {
             dump('la');
-            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
+            $excursions = $excursionRepository->findAll();
         }
-
 
         dump($excursions);
         return $this->render('main/home.html.twig', [
             'excursions' => $excursions,
             'filterForm' => $filterForm->createView()
         ]);
-
     }
 
     #[Route('/excursion/{id}/details', name: 'excursion_details')]
@@ -53,6 +55,7 @@ class ExcursionController extends AbstractController
         return $this->render('excursion/details.html.twig', [
             'excursion' => $excursion
         ]);
+
     }
 
     #[Route('/excursion/create', name: 'excursion_create', methods: ['GET', 'POST'])]
@@ -100,6 +103,7 @@ class ExcursionController extends AbstractController
     }
 
     #[Route('/excursion/{id}/update', name: 'excursion_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+
     public function update(
         int                    $id,
         Excursion              $excursion,
@@ -107,8 +111,7 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em
     ): Response {
 
-        //TODO Clean code
-        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH',$excursion);
+        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
         $excursion = $em->getRepository(Excursion::class)->find($id);
 
         if (!($excursion->getOrganizer() === $this->getUser() || $this->isGranted('ROLE_ADMIN'))) {
@@ -120,7 +123,6 @@ class ExcursionController extends AbstractController
 
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
 
-            //TODO Gérer l'Etat avec conditions
             $repoUpdated = $em->getRepository(State::class);
 
             if (isset($_POST['Created'])) {
@@ -188,4 +190,7 @@ class ExcursionController extends AbstractController
             'deleteExcursionForm' => $deleteExcursionForm
         ]);
     }
+
+
+
 }

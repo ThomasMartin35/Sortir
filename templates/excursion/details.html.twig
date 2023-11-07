@@ -35,10 +35,19 @@
         </div>
     </div>
 
-    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') and excursion.state.caption is not same as 'canceled' %}
+
+    {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
         <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-warning">Modifier</a>
         <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
     {% endif %}
+
+        {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
+            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Annuler</a>
+        {% endif %}
+
+
+
+
     <h2>Liste des participants</h2>
 
     <table class="table table-hover">

@@ -64,37 +64,55 @@ class ExcursionRepository extends ServiceEntityRepository
     public function findExcursionByFilters( FilterModel $filterModel)
     {
         $queryBuilder = $this->createQueryBuilder('e');
+        $member = $this->security->getUser();
 
         if($filterModel->getSelectedWords()){
-            $queryBuilder->andWhere("e.name LIKE :word")->setParameter("word", $filterModel->getSelectedWords());
+            $queryBuilder
+                ->andWhere("e.name LIKE :word")
+                ->setParameter("word", '%'. $filterModel->getSelectedWords().'%');
         }
 
         if($filterModel->getSelectedCampus()!== null){
-            $queryBuilder->andWhere('e.campus = :selectedCampus')->setParameter("selectedCampus", $filterModel->getSelectedCampus());
+            $queryBuilder
+                ->andWhere('e.campus = :selectedCampus')
+                ->setParameter("selectedCampus", $filterModel->getSelectedCampus());
         }
 
         if ($filterModel->getSelectedStartDate()){
-            $queryBuilder->andWhere('e.startDate >= :selectedStartDate')->setParameter("selectedStartDate", $filterModel->getSelectedStartDate());
+            $queryBuilder
+                ->andWhere('e.startDate >= :selectedStartDate')
+                ->setParameter("selectedStartDate", $filterModel->getSelectedStartDate());
         }
 
         if ($filterModel->getSelectedEndDate()){
-            $queryBuilder->andWhere('e.startDate <= :selectedEndDate')->setParameter("selectedEndDate", $filterModel->getSelectedEndDate());
+            $queryBuilder
+                ->andWhere('e.startDate <= :selectedEndDate')
+                ->setParameter("selectedEndDate", $filterModel->getSelectedEndDate());
         }
 
-        if ($filterModel->isOrganizer()){
-            $queryBuilder->andWhere('e.organizer = :isOrganizer')->setParameter("isOrganizer", true);
+        if ($filterModel->isOrganizer()) {
+            $queryBuilder
+                ->andWhere('e.organizer = :organizer')
+                ->setParameter('organizer', $member);
         }
 
-        if ($filterModel->isRegistred()){
-            $queryBuilder->andWhere('e.participants = :isRegistred')->setParameter("isRegistred", true);
+        if ($filterModel->isRegistred()) {
+            $queryBuilder
+                ->andWhere(':member MEMBER OF e.participants')
+                ->setParameter('member', $member);
         }
 
-        if ($filterModel->isNotRegistred()){
-            $queryBuilder->andWhere('e.participants = :isNotRegistred')->setParameter("isRegistred", false);
+        if ($filterModel->isNotRegistred()) {
+            $queryBuilder
+                ->andWhere(':member NOT MEMBER OF e.participants')
+                ->setParameter('member', $member);
         }
 
+        $finishedState = $this->stateRepository->findOneBy(['caption' => 'Finished']);
         if($filterModel->isFinished()){
-            $queryBuilder->andWhere('e.endDate <= :isFinished')->setParameter("isFinished", true);
+            $queryBuilder
+                ->andWhere('e.state = :finishedState')
+                ->setParameter("finishedState", $finishedState);
         }
 
         return $queryBuilder->getQuery()->getResult();
