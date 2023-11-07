@@ -87,6 +87,7 @@ class ExcursionController extends AbstractController
             }
 
             $excursion->setState($state);
+
             $organizer = $this->getUser();
             $excursion->setOrganizer($organizer);
             $excursion->addParticipant($organizer);

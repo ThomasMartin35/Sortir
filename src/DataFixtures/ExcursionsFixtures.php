@@ -29,7 +29,10 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
         $specialExcursion->setState($stateSpecialMember);
         $specialExcursion->setCampus($faker->randomElement($campus));
         $specialExcursion->setDescription('Venez nombreux pour une séance d\'Aqua Poney à UnicornLand');
+
+        $specialExcursion->addParticipant($organizerSpecialMember);
         $this->addParticipant($specialExcursion);
+
         $startDatespecialExcursion = new DateTime();
         $startDatespecialExcursion->modify('+1 month');
         $specialExcursion->setStartDate($startDatespecialExcursion);
