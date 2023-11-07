@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Excursion;
+use App\Entity\Member;
 use App\Entity\State;
 use App\Form\ExcursionType;
 use App\Form\FilterFormType;
 use App\Form\Model\FilterModel;
 use App\Form\DeleteExcursionType;
 use App\Repository\ExcursionRepository;
+use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,37 +22,35 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ExcursionController extends AbstractController
 {
     #[Route('/', name: 'main_excursionList')]
-    public function list(ExcursionRepository $excursionRepository, Request $request): Response
+    public function list(ExcursionRepository $excursionRepository, Request $request, StateRepository $stateRepository): Response
     {
+        $currentUser = $this->getUser();
         $filterModel = new FilterModel();
         $filterForm = $this->createForm(FilterFormType::class, $filterModel);
         $filterForm->handleRequest($request);
         dump($filterModel);
 
-        if($filterForm->isSubmitted()){
-
+        if ($filterForm->isSubmitted()) {
             dump('ici');
-            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
-        }else{
+            $excursions = $excursionRepository->findExcursionByFilters($filterModel, $currentUser, $stateRepository);
+        } else {
             dump('la');
-            $excursions = $excursionRepository->findExcursionByFilters($filterModel);
+            $excursions = $excursionRepository->findAll();
         }
-
 
         dump($excursions);
         return $this->render('main/home.html.twig', [
             'excursions' => $excursions,
             'filterForm' => $filterForm->createView()
         ]);
-
     }
 
     #[Route('/excursion/{id}/details', name: 'excursion_details')]
     public function details(int $id, ExcursionRepository $excursionRepository): Response
     {
-        $excursion = $excursionRepository->find($id);
+        $excursion = $excursionRepository->findOneExcursionWithParticipants($id);
         if (!$excursion) {
-            throw $this->createNotFoundException('Excursion non trouvé');
+            throw $this->createNotFoundException('Sortie non trouvée');
         }
         return $this->render('excursion/details.html.twig', [
             'excursion' => $excursion

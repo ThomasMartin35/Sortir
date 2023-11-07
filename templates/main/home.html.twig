@@ -47,6 +47,43 @@
     <div class="row justify-content-around">
         {% for excursion in excursions %}
 
+            <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 cardHover" style="max-width: 20rem;"
+                 bis_skin_checked="1">
+                <div class="card-header" bis_skin_checked="1"><a
+                            href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>
+                    </a></div>
+                <div class="card-body" bis_skin_checked="1">
+                    <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
+                        à {{ excursion.startDate | date('H:i') }}. </h5>
+
+
+                    <p class="card-text">Date limite d'inscription
+                        : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
+                    <p class="card-text"> Participants : {{ excursion.participants.count }}
+                        / {{ excursion.maxRegistrationNumber }}</p>
+                    <p> {{ excursion.state.caption }}</p>
+                    <p> Vous êtes inscrit :
+                        {% if app.user in excursion.participants %}
+                            oui
+                        {% else %}
+                            non
+                        {% endif %}
+                    </p>
+                    <p> {{ excursion.campus.name }}</p>
+                    <p>{{ excursion.organizer.pseudo }}</p>
+                    {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}"
+                           class="badge bg-warning">Modifier</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}"
+                           class="badge bg-danger">Supprimer</a>
+                    {% endif %}
+                    {% if app.user != excursion.organizer and excursion.limitRegistrationDate > date() %}
+                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-primary">S'inscrire</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-info">Se
+                            désister</a>
+                    {% endif %}
+                </div>
+            </div>
                 <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 cardHover" style="max-width: 20rem;"
                      bis_skin_checked="1">
                     <div class="card-header" bis_skin_checked="1"><a href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>  </a></div>
@@ -93,10 +130,10 @@
     </div>
 
     {% if app.user %}
-    <div>
-        <a class="btn btn-primary buttonCreateExcursion" href="{{ path('excursion_create', {'id': app.user.id}) }}"
-           title="Créer une sortie">Créer une sortie</a>
-    </div>
+        <div>
+            <a class="btn btn-primary buttonCreateExcursion" href="{{ path('excursion_create', {'id': app.user.id}) }}"
+               title="Créer une sortie">Créer une sortie</a>
+        </div>
     {% endif %}
 
 
