@@ -50,6 +50,17 @@ class ExcursionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    public function findOneExcursionWithParticipants(int $excursionId): ?Excursion {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->addSelect('p')
+            ->leftJoin('e.participants', 'p')
+            ->where('e.id = :excursionId')
+            ->setParameter('excursionId', $excursionId)
+            ->getQuery();
+
+        return $queryBuilder->getOneOrNullResult();
+    }
+
     public function findExcursionByFilters( FilterModel $filterModel)
     {
         $queryBuilder = $this->createQueryBuilder('e');

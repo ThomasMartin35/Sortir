@@ -46,9 +46,9 @@ class ExcursionController extends AbstractController
     #[Route('/excursion/{id}/details', name: 'excursion_details')]
     public function details(int $id, ExcursionRepository $excursionRepository): Response
     {
-        $excursion = $excursionRepository->find($id);
+        $excursion = $excursionRepository->findOneExcursionWithParticipants($id);
         if (!$excursion) {
-            throw $this->createNotFoundException('Excursion non trouvé');
+            throw $this->createNotFoundException('Sortie non trouvée');
         }
         return $this->render('excursion/details.html.twig', [
             'excursion' => $excursion
