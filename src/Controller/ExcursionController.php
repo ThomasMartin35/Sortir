@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class ExcursionController extends AbstractController
@@ -193,6 +192,51 @@ class ExcursionController extends AbstractController
         ]);
     }
 
+    #[Route('/excursion/{id}/subscribe', name: 'excursion_subscribe', requirements: ['id' => '\d+'])]
+    public function addParticipant(
+        Excursion $excursion,
+        EntityManagerInterface $em
+    ) : Response{
+        $this->denyAccessUnlessGranted('EXCURSION_SUBSCRIBE',$excursion);
 
+        $user = $this->getUser();
+
+        $excursion->addParticipant($user);
+
+        $em->persist($excursion);
+        $em->flush();
+        return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
+
+    }
+
+    #[Route('/excursion/{id}/unsubscribe', name: 'excursion_unsubscribe', requirements: ['id' => '\d+'])]
+    public function removeParticipant(
+        Excursion $excursion,
+        EntityManagerInterface $em
+    ) : Response{
+        $this->denyAccessUnlessGranted('EXCURSION_UNSUBSCRIBE',$excursion);
+
+        $user = $this->getUser();
+
+        $excursion->removeParticipant($user);
+
+        $em->persist($excursion);
+        $em->flush();
+        return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
+
+    }
+
+    #[Route('/excursion/{id}/deleteDraft', name: 'excursion_deletedraft', requirements: ['id' => '\d+'])]
+    public function removeDraft(
+        Excursion $excursion,
+        EntityManagerInterface $em
+    ) : Response{
+        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH',$excursion);
+
+        $em->remove($excursion);
+        $em->flush();
+        return $this->redirectToRoute('main_excursionList');
+
+    }
 
 }

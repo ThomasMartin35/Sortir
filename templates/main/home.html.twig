@@ -88,12 +88,12 @@
 
                     {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
                         <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
-                        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-info">S'inscrire</a>
+                        <a href="{{ path('excursion_subscribe', {'id': excursion.id}) }}" class="badge bg-info">S'inscrire</a>
                     {% endif %}
 
                     {% if is_granted('EXCURSION_UNSUBSCRIBE', excursion) %}
                         <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
-                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                        <a href="{{ path('excursion_unsubscribe', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
                     {% endif %}
 
                 </div>
