@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 class ExcursionController extends AbstractController
 {
@@ -53,6 +55,7 @@ class ExcursionController extends AbstractController
         return $this->render('excursion/details.html.twig', [
             'excursion' => $excursion
         ]);
+
     }
 
     #[Route('/excursion/create', name: 'excursion_create', methods: ['GET', 'POST'])]
@@ -97,6 +100,7 @@ class ExcursionController extends AbstractController
     }
 
     #[Route('/excursion/{id}/update', name: 'excursion_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+
     public function update(
         int                    $id,
         Excursion              $excursion,
@@ -104,8 +108,7 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em
     ): Response {
 
-        //TODO Clean code
-        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH',$excursion);
+        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
         $excursion = $em->getRepository(Excursion::class)->find($id);
 
         if (!($excursion->getOrganizer() === $this->getUser() || $this->isGranted('ROLE_ADMIN'))) {
@@ -117,7 +120,6 @@ class ExcursionController extends AbstractController
 
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
 
-            //TODO Gérer l'Etat avec conditions
             $repoUpdated = $em->getRepository(State::class);
 
             if (isset($_POST['Created'])) {
@@ -185,4 +187,7 @@ class ExcursionController extends AbstractController
             'deleteExcursionForm' => $deleteExcursionForm
         ]);
     }
+
+
+
 }

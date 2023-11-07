@@ -50,6 +50,7 @@ class ExcursionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
     public function findExcursionByFilters( FilterModel $filterModel)
     {
         $queryBuilder = $this->createQueryBuilder('e');
