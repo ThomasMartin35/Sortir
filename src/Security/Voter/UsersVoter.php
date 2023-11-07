@@ -107,7 +107,10 @@ class UsersVoter extends Voter
 
     private function canUnsubscribe(Excursion $excursion, Member $user): bool{
 
-        if (($excursion->getStartDate() >= new \DateTime()) && ($excursion->getParticipants()->contains($user))) {
+        if (($excursion->getStartDate() >= new \DateTime())
+            && ($excursion->getParticipants()->contains($user))
+            && ($user !== $excursion->getOrganizer())
+        ) {
             return true;
         }
             return false;
