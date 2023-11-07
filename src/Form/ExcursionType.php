@@ -79,6 +79,7 @@ class ExcursionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Excursion::class,
+            'required' => false
         ]);
     }
 }

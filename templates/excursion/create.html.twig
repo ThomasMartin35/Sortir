@@ -8,10 +8,13 @@
 
         <div class="form-group " bis_skin_checked="1">
             {{ form_start(excursionForm)}}
+
             {{ form_label(excursionForm.name) }}
-            {{ form_widget(excursionForm.name) }}<br>
+            {{ form_widget(excursionForm.name) }}
+            {{ form_errors(excursionForm.name) }}<br>
             {{ form_label(excursionForm.startDate) }}
-            {{ form_widget(excursionForm.startDate) }}<br>
+            {{ form_widget(excursionForm.startDate) }}
+            {{ form_errors(excursionForm.startDate) }}<br>
             {{ form_label(excursionForm.limitRegistrationDate) }}
             {{ form_widget(excursionForm.limitRegistrationDate) }}<br>
             {{ form_label(excursionForm.maxRegistrationNumber) }}
