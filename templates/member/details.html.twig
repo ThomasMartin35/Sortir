@@ -21,7 +21,7 @@
             <li class="list-group-item">Email : {{ member.mail }}</li>
             <li class="list-group-item">{{ member.campus.name }}</li>
         </ul>
-        {% if app.user == member or is_granted('ROLE_ADMIN') %}
+        {% if app.user == member %}
             <div class="card-body" bis_skin_checked="1">
                 <a href="{{ path('member_update', {'id': member.id}) }}" class="card-link">Modifier le profil</a>
             </div>

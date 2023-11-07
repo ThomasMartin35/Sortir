@@ -17,7 +17,7 @@
             {{ form_label(excursionForm.maxRegistrationNumber) }}
             {{ form_widget(excursionForm.maxRegistrationNumber) }}<br>
             {{ form_label(excursionForm.duration) }}
-            {{ form_widget(excursionForm.duration) }} minutes. <br>
+            {{ form_widget(excursionForm.duration) }} <br>
             {{ form_label(excursionForm.description) }}
             {{ form_widget(excursionForm.description) }}<br>
             <!-- ajouter le campus par défaut du user -->
@@ -29,7 +29,7 @@
             {{ form_widget(excursionForm.place) }}<br>
 
             <div> Ajouter un lieu
-            <a href="{{ path('place_create') }}" title="Ajouter un lieu">
+                <a href="{{ path('place_create') }}" title="Ajouter un lieu" target="_blank">
                 <img src="{{ asset('img/Plus.png') }}"
                      alt="Plus" height="50px"
                 >

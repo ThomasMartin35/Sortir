@@ -31,7 +31,7 @@ class ExcursionType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('duration', IntegerType::class, [
-                "label" => "Durée :",
+                "label" => "Durée (minutes):",
             ])
 
             ->add('limitRegistrationDate',DateTimeType::class, [

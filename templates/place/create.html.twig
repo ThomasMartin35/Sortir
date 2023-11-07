@@ -5,6 +5,7 @@
     <h1>Créer un lieu</h1>
 
     <div class="form-group " bis_skin_checked="1">
+
         {{ form_start(placeForm)}}
         {{ form_label(placeForm.name) }}
         {{ form_widget(placeForm.name) }}<br>
@@ -17,9 +18,7 @@
         {{ form_label(placeForm.city) }}
         {{ form_widget(placeForm.city) }}<br>
 
-
         <button type="submit" class="btn btn-primary">Ajouter</button>
-
 
         {{ form_end(placeForm)}}
     </div>

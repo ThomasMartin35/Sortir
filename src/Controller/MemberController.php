@@ -38,8 +38,8 @@ class MemberController extends AbstractController
         $user = $this->getUser();
 
         //Condition pour ne pas autoriser la personne à modifier le profil.
-        if ($user === null || ($user->getId() !== $member->getId() && !$this->isGranted('ROLE_ADMIN'))) {
-            throw $this->createAccessDeniedException('Vous n’êtes pas autorisé à modifier ce profil.');
+        if ($user === null || ($user->getId() !== $member->getId())) {
+            throw $this->createAccessDeniedException('Vous n’êtes pas autorisé(e) à modifier ce profil.');
         }
 
         $memberUpdateForm = $this->createForm(MemberType::class, $member, ['isEdit' => true]);
@@ -67,7 +67,6 @@ class MemberController extends AbstractController
                 //Ajout d'une nouvelle image
                 if ($imageFile) {
                     $member->setFilename($fileUploader->upload($imageFile));
-                    $this->addFlash('success', 'La photo a bien été changée');
                 } else {
                     $member->setFilename(null);
                 }
