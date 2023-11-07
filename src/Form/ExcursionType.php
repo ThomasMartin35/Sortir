@@ -18,7 +18,9 @@ use Symfony\Component\Security;
 
 class ExcursionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+
+
+        public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
 
@@ -45,7 +47,7 @@ class ExcursionType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Décrivez votre événement',
                 'required' => false
-             ])
+            ])
 
             ->add('campus', EntityType::class, [
                 'label'=> 'Campus',

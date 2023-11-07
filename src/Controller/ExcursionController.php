@@ -174,6 +174,7 @@ class ExcursionController extends AbstractController
             $state = $repo->findOneBy(
                 ['caption' => 'Canceled']);
             $excursion->setState($state);
+
             $em->persist($excursion);
             $em->flush();
 //            throw $this->createAccessDeniedException();
