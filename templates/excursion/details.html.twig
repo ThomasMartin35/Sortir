@@ -4,7 +4,7 @@
 
 
 {% block body %}
-    <h1>Détails de la sortie</h1>
+    <h1>Détails de la sortie</h1><br>
 
     <div class="detailsContainer">
         <div class="detailsColumn">
@@ -21,8 +21,8 @@
             {% if excursion.state.caption == 'Canceled' and excursion.reason is defined and excursion.reason is not empty %}
                 <p class="red-text">Motif : {{ excursion.reason }}</p>
             {% endif %}
-
         </div>
+
         <div class="detailsColumn">
             <p>Campus : {{ excursion.campus.name }}</p>
             <p>Lieu : {{ excursion.place.name }} </p>
@@ -34,6 +34,11 @@
 
         </div>
     </div>
+<br> <p>Progression des inscriptions</p>
+
+    <div class="progress" bis_skin_checked="1">
+        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (excursion.participants.count/ excursion.maxRegistrationNumber)*100}}%;" aria-valuenow=" {{ excursion.participants.count }} " aria-valuemin="0" aria-valuemax="{{ excursion.maxRegistrationNumber }}" bis_skin_checked="1"></div>
+    </div><br>
 
 
     {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
@@ -45,10 +50,16 @@
             <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Annuler</a>
         {% endif %}
 
+    {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
+        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-info">S'inscrire</a>
+    {% endif %}
 
+    {% if is_granted('EXCURSION_UNSUBSCRIBE', excursion) %}
+        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Se désister</a>
+    {% endif %}
 
-
-    <h2>Liste des participants</h2>
+<br><br>
+    <h2>Liste des participants</h2><br>
 
     <table class="table table-hover">
         <tbody>

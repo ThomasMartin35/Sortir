@@ -93,16 +93,16 @@ class UsersVoter extends Voter
     }
 
     private function canSubscribe(Excursion $excursion, Member $user): bool{
+
         if (($excursion->getState()->getCaption() == 'Opened')
-            && ($excursion->getLimitRegistrationDate() < new \DateTime())
-            && ($excursion->getMaxRegistrationNumber() < $excursion->getParticipants()->count() )
+            && ($excursion->getLimitRegistrationDate() > new \DateTime())
+            && ($excursion->getMaxRegistrationNumber() > $excursion->getParticipants()->count() )
             && ($user !== $excursion->getOrganizer())
             && (!$excursion->getParticipants()->contains($user)) ){
             return true;
         }
         return false;
     }
-
 
 
     private function canUnsubscribe(Excursion $excursion, Member $user): bool{

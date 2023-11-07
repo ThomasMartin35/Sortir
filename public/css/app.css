@@ -54,3 +54,8 @@ h1, h2 {
 .buttonCreateExcursion {
     margin : 1%;
 }
+
+.badge {
+    text-decoration: none;
+    color:white;
+}
