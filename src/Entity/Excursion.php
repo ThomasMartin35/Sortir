@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExcursionRepository::class)]
 
@@ -18,15 +19,18 @@ class Excursion
     private ?int $id = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner ce champs')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\GreaterThan("today", message: 'La date doit être supérieure à aujourd\'hui.')]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\LessThan(propertyPath: 'startDate', message: 'La date de fin d\'inscription doit être inférieure à la date de la sortie')]
     private ?\DateTimeInterface $limitRegistrationDate = null;
 
     #[ORM\Column(nullable: true)]
@@ -44,6 +48,7 @@ class Excursion
 
     #[ORM\ManyToOne(inversedBy: 'excursions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner ce champs')]
     private ?Campus $campus = null;
 
     #[ORM\ManyToOne(inversedBy: 'excursions')]
