@@ -34,12 +34,15 @@
 
         </div>
     </div>
-    <br> <p>Progression des inscriptions</p>
+    <br>
+    {% if excursion.state.caption is same as("Opened") %}
+
+    <p>Progression des inscriptions</p>
 
     <div class="progress" bis_skin_checked="1">
         <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (excursion.participants.count/ excursion.maxRegistrationNumber)*100}}%;" aria-valuenow=" {{ excursion.participants.count }} " aria-valuemin="0" aria-valuemax="{{ excursion.maxRegistrationNumber }}" bis_skin_checked="1"></div>
     </div><br>
-
+    {% endif %}
 
     {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
         <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-warning">Modifier</a>
