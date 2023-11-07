@@ -55,8 +55,9 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
             $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '+2 months'));
             $excursion->setMaxRegistrationNumber(mt_rand(1, 30));
             $excursion->setDescription($faker->sentence(8));
-
-            $excursion->setOrganizer($faker->randomElement($members));
+            $organizerMember = $faker->randomElement($members);
+            $excursion->setOrganizer($organizerMember);
+            $excursion->addParticipant($organizerMember);
             $excursion->setCampus($faker->randomElement($campus));
             //Fixture with addReference to State
             $state = $this->getReference('opened');
