@@ -2,7 +2,7 @@
 {% block title %}{{ parent() }} | Excursion Delete{% endblock %}
 
 {% block body %}
-    <h1>Excursion Delete</h1>
+    <h1>Excursion Delete</h1><br>
 
     <div class="form-group " bis_skin_checked="1">
 
@@ -16,7 +16,7 @@
 
         {{ form_label(deleteExcursionForm.reason) }}
         {{ form_widget(deleteExcursionForm.reason) }}
-        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
+        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}<br>
             <button type="submit" class="btn btn-primary">Enregistrer</button>
             <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="btn btn-danger" >Annuler</a>
         {% endif %}
