@@ -26,22 +26,39 @@
         <div class="detailsColumn">
             <p>Campus : {{ excursion.campus.name }}</p>
             <p>Lieu : {{ excursion.place ? excursion.place.name : "" }} </p>
-            <p>Rue : {{ excursion.place ? excursion.place.street : ""}}</p>
+            <p>Rue : {{ excursion.place ? excursion.place.street : "" }}</p>
             <p>Code postal : {{ excursion.place ? excursion.place.city.postcode :"" }}</p>
-            <p>Latitude : {{ excursion.place ? excursion.place.latitude : ""}}</p>
-            <p>Longitude : {{ excursion.place ? excursion.place.latitude : ""}}</p>
+            <p>Latitude : {{ excursion.place ? excursion.place.latitude : "" }}</p>
+            <p>Longitude : {{ excursion.place ? excursion.place.latitude : "" }}</p>
 
-
+        </div>
+        <div class="d-flex">
+            <div class="card mb-3 cardImageOrganizer" bis_skin_checked="1">
+                <h3 class="card-header">Organisateur</h3>
+                <div class="card-body" bis_skin_checked="1">
+                    <h5 class="card-title">Pseudo : {{ excursion.organizer.pseudo }}</h5>
+                </div>
+                {% if excursion.organizer.filename != null %}
+                    <img src="{{ asset(app_images_member_directory ~ '/' ~ excursion.organizer.filename) }}"
+                         class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
+                    {% else %}
+                        <img src="{{ asset('img/unicorn_organizer.png') }}"
+                             class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
+                {% endif %}
+            </div>
         </div>
     </div>
     <br>
     {% if excursion.state.caption is same as("Opened") %}
 
-    <p>Progression des inscriptions</p>
+        <p>Progression des inscriptions</p>
 
-    <div class="progress" bis_skin_checked="1">
-        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (excursion.participants.count/ excursion.maxRegistrationNumber)*100}}%;" aria-valuenow=" {{ excursion.participants.count }} " aria-valuemin="0" aria-valuemax="{{ excursion.maxRegistrationNumber }}" bis_skin_checked="1"></div>
-    </div><br>
+        <div class="progress" bis_skin_checked="1">
+            <div class="progress-bar progress-bar-striped" role="progressbar"
+                 style="width: {{ (excursion.participants.count/ excursion.maxRegistrationNumber)*100 }}%;"
+                 aria-valuenow=" {{ excursion.participants.count }} " aria-valuemin="0"
+                 aria-valuemax="{{ excursion.maxRegistrationNumber }}" bis_skin_checked="1"></div>
+        </div><br>
     {% endif %}
 
     {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
@@ -73,7 +90,8 @@
         {% if excursion.participants|length > 0 %}
             {% for participant in excursion.participants %}
                 <tr>
-                    <td><a href="{{ path('member_details', {'id' : participant.id}) }}"> {{ participant.pseudo }}</a></td>
+                    <td><a href="{{ path('member_details', {'id' : participant.id}) }}"> {{ participant.pseudo }}</a>
+                    </td>
                     <td> {{ participant.name }} </td>
                 </tr>
             {% endfor %}
