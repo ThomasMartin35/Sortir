@@ -43,7 +43,7 @@
 
     {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
         <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-warning">Modifier</a>
-        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
+        <a href="{{ path('excursion_deletedraft', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
     {% endif %}
 
         {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
@@ -51,11 +51,11 @@
         {% endif %}
 
     {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
-        <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="btn btn-info">S'inscrire</a>
+        <a href="{{ path('excursion_subscribe', {'id': excursion.id}) }}" class="btn btn-info">S'inscrire</a>
     {% endif %}
 
     {% if is_granted('EXCURSION_UNSUBSCRIBE', excursion) %}
-        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Se désister</a>
+        <a href="{{ path('excursion_unsubscribe', {'id': excursion.id}) }}" class="btn btn-danger">Se désister</a>
     {% endif %}
 
 <br><br>
