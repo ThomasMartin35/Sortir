@@ -6,22 +6,22 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="mb-3">Filtrer les sorties</h1>
-            {{ form_start(filterForm) }}
-            {{ form_row(filterForm.selectedCampus) }}
-            {{ form_row(filterForm.selectedWords) }}
-            {{ form_row(filterForm.selectedStartDate) }}
-            {{ form_row(filterForm.selectedEndDate) }}
-            <div class="row">
-                <div class="col-6">
-                    {{ form_row(filterForm.isOrganizer) }}
-                    {{ form_row(filterForm.isRegistred) }}
+                {{ form_start(filterForm) }}
+                {{ form_row(filterForm.selectedCampus) }}
+                {{ form_row(filterForm.selectedWords) }}
+                {{ form_row(filterForm.selectedStartDate) }}
+                {{ form_row(filterForm.selectedEndDate) }}
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(filterForm.isOrganizer) }}
+                        {{ form_row(filterForm.isRegistred) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(filterForm.isNotRegistred) }}
+                        {{ form_row(filterForm.isFinished) }}
+                    </div>
                 </div>
-                <div class="col-6">
-                    {{ form_row(filterForm.isNotRegistred) }}
-                    {{ form_row(filterForm.isFinished) }}
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             {{ form_end(filterForm) }}
 
         </div>
@@ -84,6 +84,43 @@
                     {% endif %}
                 </div>
             </div>
+                <div class="card border-warning mb-3 col-sm-6 col-md-5 col-lg-6 cardHover" style="max-width: 20rem;"
+                     bis_skin_checked="1">
+                    <div class="card-header" bis_skin_checked="1"><a href="{{ path('excursion_details', {'id': excursion.id}) }}"><h3>{{ excursion.name }}</h3>  </a></div>
+                    <div class="card-body" bis_skin_checked="1">
+                        <h5 class="card-title">Le {{ excursion.startDate | date('d M Y') }}
+                            à {{ excursion.startDate | date('H:i') }}. </h5>
+                        <p class="card-text"> Description : {{ excursion.description }}</p>
+                        <p class="card-text">Date limite d'inscription
+                            : {{ excursion.limitRegistrationDate | date('d/m/Y') }}</p>
+                        <p> {{ excursion.campus.name }}</p>
+
+                        {% if is_granted('EXCURSION_VIEW', excursion) %}
+                        <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_VIEW_CANCEL', excursion) %}
+                            <a href="{{ path('excursion_details', {'id': excursion.id}) }}" class="badge bg-warning">Afficher</a>
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Annuler</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">Modifier</a>
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-danger">Publier</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_SUBSCRIBE', excursion) %}
+                            <a href="{{ path('excursion_update', {'id': excursion.id}) }}" class="badge bg-warning">S'inscrire</a>
+                        {% endif %}
+
+                        {% if is_granted('EXCURSION_UNSUBSCRIBE', excursion) %}
+                        <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="badge bg-danger">Se désister</a>
+                        {% endif %}
+
+
+
+                    </div>
+                </div>
 
         {% else %}
             <tr>
