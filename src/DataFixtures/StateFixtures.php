@@ -30,9 +30,14 @@ class StateFixtures extends Fixture
         $finished->setCaption('Finished');
         $manager->persist($finished);
 
+        $archived = new State();
+        $archived->setCaption('Archived');
+        $manager->persist($archived);
+
         $canceled = new State();
         $canceled->setCaption('Canceled');
         $manager->persist($canceled);
+
 
         $manager->flush();
 

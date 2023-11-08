@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Campus;
 use App\Entity\Excursion;
+use App\Entity\State;
 use App\Form\Model\FilterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
