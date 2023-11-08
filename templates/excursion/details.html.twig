@@ -36,7 +36,7 @@
             <div class="card mb-3 cardImageOrganizer" bis_skin_checked="1">
                 <h3 class="card-header">Organisateur</h3>
                 <div class="card-body" bis_skin_checked="1">
-                    <h5 class="card-title">Pseudo : {{ excursion.organizer.pseudo }}</h5>
+                    <h5 class="card-title">Pseudo : <a href="{{ path('member_details', {'id' : excursion.organizer.id}) }}">{{ excursion.organizer.pseudo }}</a></h5>
                 </div>
                 {% if excursion.organizer.filename != null %}
                     <img src="{{ asset(app_images_member_directory ~ '/' ~ excursion.organizer.filename) }}"
