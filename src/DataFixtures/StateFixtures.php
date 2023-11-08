@@ -46,6 +46,7 @@ class StateFixtures extends Fixture
         $this->addReference('closed', $closed);
         $this->addReference('inProgress', $inProgress);
         $this->addReference('finished', $finished);
+        $this->addReference('archived', $archived);
         $this->addReference('canceled', $canceled);
 
     }

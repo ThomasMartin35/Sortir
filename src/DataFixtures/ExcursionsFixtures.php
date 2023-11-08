@@ -37,10 +37,9 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
         $startDatespecialExcursion->modify('+1 month');
         $specialExcursion->setStartDate($startDatespecialExcursion);
         $specialExcursion->setDuration(mt_rand(30, 240));
-        $endDatespecialExcursion = new DateTime();
         $endDatespecialExcursion = (clone $startDatespecialExcursion)->modify('+2 months');
         $specialExcursion->setLimitRegistrationDate($endDatespecialExcursion);
-        $specialExcursion->setMaxRegistrationNumber(mt_rand(1, 30));
+        $specialExcursion->setMaxRegistrationNumber(mt_rand(2, 10));
         $placeSpecialExcursion = $this->getReference('place1');
         $specialExcursion->setPlace($placeSpecialExcursion);
 
@@ -53,7 +52,7 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
             $excursion->setStartDate($dateStart);
             $excursion->setDuration(mt_rand(30, 240));
             $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '+2 months'));
-            $excursion->setMaxRegistrationNumber(mt_rand(1, 30));
+            $excursion->setMaxRegistrationNumber(mt_rand(2, 30));
             $excursion->setDescription($faker->sentence(8));
             $organizerMember = $faker->randomElement($members);
             $excursion->setOrganizer($organizerMember);
@@ -75,7 +74,7 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
     }
 
     public function addParticipant(Excursion $excursion): void {
-        for ($i = 0; $i <= mt_rand(0,5); $i++) {
+        for ($i = 0; $i <= mt_rand(0,1); $i++) {
             $participant = $this->getReference('test' . rand (1,10));
             $excursion->addParticipant($participant);
         }

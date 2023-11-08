@@ -62,6 +62,19 @@ class ExcursionRepository extends ServiceEntityRepository
         return $queryBuilder->getOneOrNullResult();
     }
 
+    public function findAllExcursionsWithoutArchived(): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->leftJoin('e.state', 's')
+            ->andWhere('s.caption != :archivedState')
+            ->setParameter('archivedState', 'Archived')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+
+
     public function findExcursionByFilters( FilterModel $filterModel )
     {
         $queryBuilder = $this->createQueryBuilder('e');
