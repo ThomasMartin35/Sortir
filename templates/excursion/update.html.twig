@@ -26,11 +26,12 @@
         {{ form_label(excursionForm.place) }}
         {{ form_widget(excursionForm.place) }}<br>
 
-        {% if app.user == excursion.organizer or is_granted('ROLE_ADMIN') %}
-            <button type="submit" name="Created" value="Created" class="btn btn-primary">Enregistrer</button>
-            <button type="submit" name="Opened" value="Opened" class="btn btn-success">Publier</button>
+        {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
+            {{ form_row(excursionForm.create) }}<br>
+            {{ form_row(excursionForm.publish) }}<br>
+
             <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
-            <a class="btn btn-warning" href="{{ path('main_excursionList') }}" title="Ajouter un lieu">Annuler</a>
+            <a class="btn btn-warning" href="{{ path('main_excursionList') }}" title="Annuler">Annuler</a>
         {% endif %}
 
         {{ form_end(excursionForm)}}

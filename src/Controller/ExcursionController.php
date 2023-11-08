@@ -72,18 +72,19 @@ class ExcursionController extends AbstractController
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
             $excursion->setOrganizer($this->getUser());
 
-            //TODO Gérer l'Etat avec conditions
             $repo = $em->getRepository(State::class);
 
-            if (isset($_POST['Created'])) {
-                $state = $repo->findOneBy(
-                    ['caption' => 'Created']);
-            }
-            if
-            (isset($_POST['Opened'])) {
-                $state = $repo->findOneBy(
-                    ['caption' => 'Opened']);
-            }
+                $publishClicked = $excursionForm->get('publish')->isClicked();
+
+                if ($publishClicked) {
+                    $state = $repo->findOneBy(
+                        ['caption' => 'Opened']);
+                    $excursion->setState($state);
+                } else {
+                    $state = $repo->findOneBy(
+                        ['caption' => 'Created']);
+                    $excursion->setState($state);
+                }
 
             $excursion->setState($state);
 
@@ -120,29 +121,27 @@ class ExcursionController extends AbstractController
 
         $excursionForm = $this->createForm(ExcursionType::class, $excursion);
         $excursionForm->handleRequest($request);
+        $repoUpdated = $em->getRepository(State::class);
 
         if ($excursionForm->isSubmitted() && $excursionForm->isValid()) {
+            $publishClicked = $excursionForm->get('publish')->isClicked();
 
-            $repoUpdated = $em->getRepository(State::class);
-
-            if (isset($_POST['Created'])) {
-                $state = $repoUpdated->findOneBy(
-                    ['caption' => 'Created']);
-            }
-            if
-            (isset($_POST['Opened'])) {
+            if ($publishClicked) {
                 $state = $repoUpdated->findOneBy(
                     ['caption' => 'Opened']);
+                $excursion->setState($state);
+            } else {
+                $state = $repoUpdated->findOneBy(
+                    ['caption' => 'Created']);
+                $excursion->setState($state);
             }
 
-            $excursion->setState($state);
 
-            $em->persist($excursion);
-            $em->flush();
-            $this->addFlash('success', 'La sortie a été modifiée');
-            return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
-        }
-
+        $em->persist($excursion);
+        $em->flush();
+        $this->addFlash('success', 'La sortie a été modifiée');
+        return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
+    }
         return $this->render('excursion/update.html.twig', [
             'excursion' => $excursion,
             'excursionForm' => $excursionForm
@@ -238,5 +237,7 @@ class ExcursionController extends AbstractController
         return $this->redirectToRoute('main_excursionList');
 
     }
+
+
 
 }
