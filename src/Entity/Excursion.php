@@ -20,9 +20,11 @@ class Excursion
 
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\NotBlank(message: 'Veuillez renseigner un titre')]
+    #[Assert\NotNull(groups: ['publish','create'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotNull(groups: ['publish'])]
     #[Assert\GreaterThan("today", message: 'La date doit être supérieure à aujourd\'hui.')]
     private ?\DateTimeInterface $startDate = null;
 
@@ -34,6 +36,7 @@ class Excursion
     private ?\DateTimeInterface $limitRegistrationDate = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotNull(groups: ['publish'])]
     private ?int $maxRegistrationNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]
