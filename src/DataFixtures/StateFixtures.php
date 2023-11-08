@@ -30,9 +30,14 @@ class StateFixtures extends Fixture
         $finished->setCaption('Finished');
         $manager->persist($finished);
 
+        $archived = new State();
+        $archived->setCaption('Archived');
+        $manager->persist($archived);
+
         $canceled = new State();
         $canceled->setCaption('Canceled');
         $manager->persist($canceled);
+
 
         $manager->flush();
 
@@ -41,6 +46,7 @@ class StateFixtures extends Fixture
         $this->addReference('closed', $closed);
         $this->addReference('inProgress', $inProgress);
         $this->addReference('finished', $finished);
+        $this->addReference('archived', $archived);
         $this->addReference('canceled', $canceled);
 
     }

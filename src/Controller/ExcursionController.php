@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Excursion;
-use App\Entity\Member;
 use App\Entity\State;
 use App\Form\ExcursionType;
 use App\Form\FilterFormType;
@@ -11,6 +10,7 @@ use App\Form\Model\FilterModel;
 use App\Form\DeleteExcursionType;
 use App\Repository\ExcursionRepository;
 use App\Repository\StateRepository;
+use App\Services\StateManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,20 +21,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExcursionController extends AbstractController
 {
     #[Route('/', name: 'main_excursionList')]
-    public function list(ExcursionRepository $excursionRepository, Request $request, StateRepository $stateRepository): Response
+    public function list(ExcursionRepository $excursionRepository, Request $request, StateRepository $stateRepository,
+                         StateManager        $stateManager, EntityManagerInterface $em): Response
     {
+
+
         $currentUser = $this->getUser();
         $filterModel = new FilterModel();
         $filterForm = $this->createForm(FilterFormType::class, $filterModel);
         $filterForm->handleRequest($request);
         dump($filterModel);
 
+        $excursions = $excursionRepository->findAllExcursionsWithoutArchived();
+        $stateManager->checkExcursionState();
+
         if ($filterForm->isSubmitted()) {
-            dump('ici');
             $excursions = $excursionRepository->findExcursionByFilters($filterModel, $currentUser, $stateRepository);
-        } else {
-            dump('la');
-            $excursions = $excursionRepository->findAll();
         }
 
         dump($excursions);
@@ -104,13 +106,13 @@ class ExcursionController extends AbstractController
     }
 
     #[Route('/excursion/{id}/update', name: 'excursion_update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-
     public function update(
         int                    $id,
         Excursion              $excursion,
         Request                $request,
         EntityManagerInterface $em
-    ): Response {
+    ): Response
+    {
 
         $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
         $excursion = $em->getRepository(Excursion::class)->find($id);
@@ -157,7 +159,7 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em): Response
     {
         //TODO Clean code
-        $this->denyAccessUnlessGranted('EXCURSION_VIEW_CANCEL',$excursion);
+        $this->denyAccessUnlessGranted('EXCURSION_VIEW_CANCEL', $excursion);
 
         $deleteExcursionForm = $this->createForm(DeleteExcursionType::class, $excursion);
         $deleteExcursionForm->handleRequest($request);
@@ -193,10 +195,11 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/subscribe', name: 'excursion_subscribe', requirements: ['id' => '\d+'])]
     public function addParticipant(
-        Excursion $excursion,
+        Excursion              $excursion,
         EntityManagerInterface $em
-    ) : Response{
-        $this->denyAccessUnlessGranted('EXCURSION_SUBSCRIBE',$excursion);
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('EXCURSION_SUBSCRIBE', $excursion);
 
         $user = $this->getUser();
 
@@ -210,10 +213,11 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/unsubscribe', name: 'excursion_unsubscribe', requirements: ['id' => '\d+'])]
     public function removeParticipant(
-        Excursion $excursion,
+        Excursion              $excursion,
         EntityManagerInterface $em
-    ) : Response{
-        $this->denyAccessUnlessGranted('EXCURSION_UNSUBSCRIBE',$excursion);
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('EXCURSION_UNSUBSCRIBE', $excursion);
 
         $user = $this->getUser();
 
@@ -227,10 +231,11 @@ class ExcursionController extends AbstractController
 
     #[Route('/excursion/{id}/deleteDraft', name: 'excursion_deletedraft', requirements: ['id' => '\d+'])]
     public function removeDraft(
-        Excursion $excursion,
+        Excursion              $excursion,
         EntityManagerInterface $em
-    ) : Response{
-        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH',$excursion);
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
 
         $em->remove($excursion);
         $em->flush();

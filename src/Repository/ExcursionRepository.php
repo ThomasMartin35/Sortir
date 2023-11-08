@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Campus;
 use App\Entity\Excursion;
+use App\Entity\State;
 use App\Form\Model\FilterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -61,6 +61,19 @@ class ExcursionRepository extends ServiceEntityRepository
 
         return $queryBuilder->getOneOrNullResult();
     }
+
+    public function findAllExcursionsWithoutArchived(): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->leftJoin('e.state', 's')
+            ->andWhere('s.caption != :archivedState')
+            ->setParameter('archivedState', 'Archived')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+
 
     public function findExcursionByFilters( FilterModel $filterModel )
     {
