@@ -6,9 +6,13 @@
 {% block body %}
     <h1>Détails de la sortie</h1><br>
 
+    <div class="details-title">
+        <p> {{ excursion.name }} </p>
+    </div>
+
     <div class="detailsContainer">
+
         <div class="detailsColumn">
-            <p>Nom de la sortie : {{ excursion.name }} </p>
             <p>Date et heure de la sortie : {{ excursion.startDate | date('d M Y') }}
                 à {{ excursion.startDate | date('H:i') }}</p>
             <p>Date limite d'inscription : {{ excursion.limitRegistrationDate | date('d M Y') }}</p>
@@ -41,9 +45,9 @@
                 {% if excursion.organizer.filename != null %}
                     <img src="{{ asset(app_images_member_directory ~ '/' ~ excursion.organizer.filename) }}"
                          class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
-                    {% else %}
-                        <img src="{{ asset('img/unicorn_organizer.png') }}"
-                             class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
+                {% else %}
+                    <img src="{{ asset('img/unicorn_organizer.png') }}"
+                         class="card-img-top img-fluid rounded mx-auto d-bloc" alt="photo de l'utilisateur">
                 {% endif %}
             </div>
         </div>
