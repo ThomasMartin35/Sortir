@@ -2,9 +2,17 @@ a{
     text-decoration: none !important;
 }
 
+.navbar-toggler {
+    background-color: #18bc9c;
+}
+.navbar-toggler-icon {
+    background-color: white;
+}
+
 .navbar-collapse{
     justify-content: flex-end !important;
 }
+
 h1, h2 {
     color: #18bc9c;
     margin-bottom: 3px;
@@ -62,4 +70,19 @@ h1, h2 {
 
 .imageForm {
     width: 25% !important;
+}
+
+.list-group-item > span{
+    font-weight: bold;
+    color: #555555;
+}
+
+.card-title > span {
+    font-weight: bold;
+    color: #555555;
+}
+
+label {
+    font-weight: bold;
+    color: #555555;
 }
