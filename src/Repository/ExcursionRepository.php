@@ -8,6 +8,7 @@ use App\Form\Model\FilterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 
 /**
@@ -20,7 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExcursionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private StateRepository $stateRepository, private Security $security)
     {
         parent::__construct($registry, Excursion::class);
     }
@@ -61,7 +62,7 @@ class ExcursionRepository extends ServiceEntityRepository
         return $queryBuilder->getOneOrNullResult();
     }
 
-    public function findExcursionByFilters( FilterModel $filterModel)
+    public function findExcursionByFilters( FilterModel $filterModel )
     {
         $queryBuilder = $this->createQueryBuilder('e');
         $member = $this->security->getUser();
