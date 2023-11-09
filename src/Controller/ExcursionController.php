@@ -97,6 +97,7 @@ class ExcursionController extends AbstractController
 
             $em->persist($excursion);
             $em->flush();
+            $this->addFlash('success', 'La sortie a été créée avec succès');
             return $this->redirectToRoute('main_excursionList');
 
         }
@@ -199,7 +200,7 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em
     ): Response
     {
-        $this->denyAccessUnlessGranted('EXCURSION_SUBSCRIBE', $excursion);
+        $this->denyAccessUnlessGranted(UsersVoter::EXCURSION_SUBSCRIBE, $excursion);
 
         $user = $this->getUser();
 
@@ -207,6 +208,8 @@ class ExcursionController extends AbstractController
 
         $em->persist($excursion);
         $em->flush();
+        $this->addFlash('success', 'Vous êtes inscrit !');
+
         return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
 
     }
@@ -217,7 +220,7 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em
     ): Response
     {
-        $this->denyAccessUnlessGranted('EXCURSION_UNSUBSCRIBE', $excursion);
+        $this->denyAccessUnlessGranted(UsersVoter::EXCURSION_UNSUBSCRIBE, $excursion);
 
         $user = $this->getUser();
 
@@ -225,6 +228,8 @@ class ExcursionController extends AbstractController
 
         $em->persist($excursion);
         $em->flush();
+        $this->addFlash('success', 'Vous êtes désinscrit !');
+
         return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
 
     }
@@ -235,10 +240,12 @@ class ExcursionController extends AbstractController
         EntityManagerInterface $em
     ): Response
     {
-        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
+        $this->denyAccessUnlessGranted(UsersVoter::EXCURSION_EDITPUBLISH, $excursion);
 
         $em->remove($excursion);
         $em->flush();
+        $this->addFlash('success', 'La sortie a été supprimée');
+
         return $this->redirectToRoute('main_excursionList');
 
     }
