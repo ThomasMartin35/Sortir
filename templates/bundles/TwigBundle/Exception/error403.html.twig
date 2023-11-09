@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="errorItems">
+        <h2>Erreur 403 - Vous n'avez pas accès</h2>
+
+
+        <img src="{{ asset('img/error403image.png') }}" alt="Error 403 with Gandalf">
+
+
+        <div class="text-center">
+            <br>
+            <a class="btn btn-primary btn-sm" href="{{ path('main_home') }}" title="Retour à l'accueil">Retour</a>
+        </div>
+    </div>
+{% endblock %}
+{% block title %}Error 403{% endblock %}
