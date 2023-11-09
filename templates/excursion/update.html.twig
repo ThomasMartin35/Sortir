@@ -41,7 +41,7 @@
             {{ form_row(excursionForm.create) }}<br>
             {{ form_row(excursionForm.publish) }}<br>
 
-            <a href="{{ path('excursion_delete', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
+            <a href="{{ path('excursion_deletedraft', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
             <a class="btn btn-warning" href="{{ path('main_excursionList') }}" title="Annuler">Annuler</a>
         {% endif %}
 
