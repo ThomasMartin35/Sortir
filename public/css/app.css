@@ -96,3 +96,25 @@ label {
     text-align: center;
     margin-bottom: 1rem;
 }
+.filterDate{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+
+}
+.filterStartDateLabel{
+    display: flex;
+    align-items: flex-end;
+    padding-right: 1rem;
+}
+
+.filterEndDateLabel{
+    display: flex;
+    align-items: flex-end;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}

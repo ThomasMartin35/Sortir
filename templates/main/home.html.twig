@@ -7,10 +7,22 @@
         <div class="col-md-8">
             <h1 class="mb-3">Filtrer les sorties</h1>
                 {{ form_start(filterForm) }}
-                {{ form_row(filterForm.selectedCampus) }}
-                {{ form_row(filterForm.selectedWords) }}
-                {{ form_row(filterForm.selectedStartDate) }}
-                {{ form_row(filterForm.selectedEndDate) }}
+
+                {{ form_label(filterForm.selectedCampus) }}
+                {{ form_widget(filterForm.selectedCampus) }}<br>
+                {{ form_label(filterForm.selectedWords) }}
+                {{ form_widget(filterForm.selectedWords) }}<br>
+            <div class="filterDate">
+                <div class="filterStartDateLabel">
+                {{ form_label(filterForm.selectedStartDate) }}
+                 </div>
+                {{ form_widget(filterForm.selectedStartDate) }}
+                <div class="filterEndDateLabel">
+                {{ form_label(filterForm.selectedEndDate) }}
+                </div>
+                {{ form_widget(filterForm.selectedEndDate) }}
+            </div>
+
                 <div class="row">
                     <div class="col-6">
                         {{ form_row(filterForm.isOrganizer) }}
