@@ -3,6 +3,42 @@
 
 {% block body %}
 
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ asset('img/carousel1.jpg') }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Bienvenue sur Sortir.com</h4>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('img/carousel2.jpg') }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Bienvenue sur Sortir.com</h4>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('img/carousel3.jpg') }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Bienvenue sur Sortir.com</h4>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Suivant</span>
+        </a>
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <h1 class="mb-3">Filtrer les sorties</h1>
@@ -112,7 +148,6 @@
                title="Créer une sortie">Créer une sortie</a>
         </div>
     {% endif %}
-
 
 {% endblock %}
 
