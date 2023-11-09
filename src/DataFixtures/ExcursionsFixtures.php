@@ -37,7 +37,7 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
         $startDatespecialExcursion->modify('+1 month');
         $specialExcursion->setStartDate($startDatespecialExcursion);
         $specialExcursion->setDuration(mt_rand(30, 240));
-        $endDatespecialExcursion = (clone $startDatespecialExcursion)->modify('+2 months');
+        $endDatespecialExcursion = (clone $startDatespecialExcursion)->modify('-2 days');
         $specialExcursion->setLimitRegistrationDate($endDatespecialExcursion);
         $specialExcursion->setMaxRegistrationNumber(mt_rand(2, 10));
         $placeSpecialExcursion = $this->getReference('place1');
@@ -51,7 +51,7 @@ class ExcursionsFixtures extends Fixture implements DependentFixtureInterface
             $dateStart = $faker->dateTimeBetween('-2 months', '+2 months');
             $excursion->setStartDate($dateStart);
             $excursion->setDuration(mt_rand(30, 240));
-            $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '+2 months'));
+            $excursion->setLimitRegistrationDate($faker->dateTimeInInterval($dateStart, '-2 days'));
             $excursion->setMaxRegistrationNumber(mt_rand(2, 30));
             $excursion->setDescription($faker->sentence(8));
             $organizerMember = $faker->randomElement($members);
