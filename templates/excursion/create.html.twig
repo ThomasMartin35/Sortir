@@ -21,15 +21,15 @@
             {{ form_label(excursionForm.maxRegistrationNumber) }}
             {{ form_widget(excursionForm.maxRegistrationNumber) }}
             {{ form_errors(excursionForm.maxRegistrationNumber) }}<br>
-            <br>
+
             {{ form_label(excursionForm.duration) }}
             {{ form_widget(excursionForm.duration) }}
             {{ form_errors(excursionForm.duration) }}<br>
-            <br>
+
             {{ form_label(excursionForm.description) }}
             {{ form_widget(excursionForm.description) }}
             {{ form_errors(excursionForm.description) }}<br>
-            <br>
+
             <!-- ajouter le campus par défaut du user -->
             {{ form_label(excursionForm.campus) }}
             {{ form_widget(excursionForm.campus) }}
@@ -37,11 +37,11 @@
             {{ form_label(excursionForm.city) }}
             {{ form_widget(excursionForm.city) }}
             {{ form_errors(excursionForm.city) }}<br>
-            <br>
+
             {{ form_label(excursionForm.place) }}
             {{ form_widget(excursionForm.place) }}
             {{ form_errors(excursionForm.place) }}<br>
-            <br>
+
 
             <div> Ajouter un lieu
                 <a href="{{ path('place_create') }}" title="Ajouter un lieu" target="_blank">
