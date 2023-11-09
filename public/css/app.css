@@ -133,3 +133,12 @@ label {
     flex-direction: column;
     align-items: center;
 }
+
+.EditBtn{
+    margin: 10px;
+}
+
+.BlockBtn{
+    display: flex;
+    align-items: flex-start;
+}

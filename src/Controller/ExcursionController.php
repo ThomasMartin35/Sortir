@@ -228,7 +228,7 @@ class ExcursionController extends AbstractController
 
         $em->persist($excursion);
         $em->flush();
-        $this->addFlash('success', 'Vous êtes désinscrit !');
+        $this->addFlash('info', 'Vous êtes désinscrit !');
 
         return $this->redirectToRoute('excursion_details', ['id' => $excursion->getId()]);
 

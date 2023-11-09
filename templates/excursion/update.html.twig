@@ -37,17 +37,18 @@
         {{ form_widget(excursionForm.place) }}
         {{ form_errors(excursionForm.place) }}<br>
 
-        {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
-            {{ form_row(excursionForm.create) }}<br>
-            {{ form_row(excursionForm.publish) }}<br>
+    <div class="BlockBtn">
 
-            <a href="{{ path('excursion_deletedraft', {'id': excursion.id}) }}" class="btn btn-danger">Supprimer</a>
-            <a class="btn btn-warning" href="{{ path('main_excursionList') }}" title="Annuler">Annuler</a>
+        {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
+        <div class="EditBtn">   {{ form_row(excursionForm.create) }}    </div><br>
+        <div class="EditBtn">   {{ form_row(excursionForm.publish) }}   </div><br>
+   <a href="{{ path('excursion_deletedraft', {'id': excursion.id}) }}" class=" EditBtn btn btn-danger">Supprimer</a>  <br>
+ <a class="EditBtn btn btn-warning" href="{{ path('main_excursionList') }}" title="Annuler">Annuler</a>
         {% endif %}
 
         {{ form_end(excursionForm)}}
+    </div></div>
 
-    </div>
 
 
 {% endblock %}

@@ -49,10 +49,11 @@
                      alt="Plus" height="50px"
                 >
             </a></div><br>
-
-            {{ form_widget(excursionForm.create) }}<br>
-            {{ form_widget(excursionForm.publish) }}<br>
-    <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="btn btn-danger" >Annuler</a>
+            <div class="BlockBtn">
+           <div class="EditBtn"> {{ form_widget(excursionForm.create) }}</div><br>
+           <div class="EditBtn">{{ form_widget(excursionForm.publish) }}</div> <br>
+           <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="EditBtn btn btn-danger" >Annuler</a>
+        </div>
             {{ form_end(excursionForm)}}
 
         </div>
