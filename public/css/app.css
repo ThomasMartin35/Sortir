@@ -127,3 +127,9 @@ label {
     height: 300px; /* Ajustez cette valeur selon vos besoins */
     object-fit: cover; /* Cela permet de garder le ratio de l'image tout en la recadrant */
 }
+
+.errorItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
