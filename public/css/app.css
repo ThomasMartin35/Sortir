@@ -124,8 +124,8 @@ label {
 }
 
 .carousel-item img {
-    height: 300px; /* Ajustez cette valeur selon vos besoins */
-    object-fit: cover; /* Cela permet de garder le ratio de l'image tout en la recadrant */
+    height: 300px;
+    object-fit: cover;
 }
 
 .errorItems {
