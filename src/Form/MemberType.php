@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class MemberType extends AbstractType
+class   MemberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
