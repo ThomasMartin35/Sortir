@@ -10,6 +10,7 @@ use App\Form\Model\FilterModel;
 use App\Form\DeleteExcursionType;
 use App\Repository\ExcursionRepository;
 use App\Repository\StateRepository;
+use App\Security\Voter\UsersVoter;
 use App\Services\StateManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,7 +115,7 @@ class ExcursionController extends AbstractController
     ): Response
     {
 
-        $this->denyAccessUnlessGranted('EXCURSION_EDIT_PUBLISH', $excursion);
+        $this->denyAccessUnlessGranted(UsersVoter::EXCURSION_EDITPUBLISH, $excursion);
         $excursion = $em->getRepository(Excursion::class)->find($id);
 
         if (!($excursion->getOrganizer() === $this->getUser() || $this->isGranted('ROLE_ADMIN'))) {
@@ -158,7 +159,7 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('EXCURSION_VIEW_CANCEL', $excursion);
+        $this->denyAccessUnlessGranted(UsersVoter::EXCURSION_VIEWCANCEL, $excursion);
 
         $deleteExcursionForm = $this->createForm(DeleteExcursionType::class, $excursion);
         $deleteExcursionForm->handleRequest($request);
