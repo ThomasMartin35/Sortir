@@ -30,7 +30,6 @@ class ExcursionController extends AbstractController
         $filterModel = new FilterModel();
         $filterForm = $this->createForm(FilterFormType::class, $filterModel);
         $filterForm->handleRequest($request);
-        dump($filterModel);
 
         $excursions = $excursionRepository->findAllExcursionsWithoutArchived();
         $stateManager->checkExcursionState();
@@ -39,7 +38,6 @@ class ExcursionController extends AbstractController
             $excursions = $excursionRepository->findExcursionByFilters($filterModel, $currentUser, $stateRepository);
         }
 
-        dump($excursions);
         return $this->render('main/home.html.twig', [
             'excursions' => $excursions,
             'filterForm' => $filterForm->createView()
@@ -60,7 +58,6 @@ class ExcursionController extends AbstractController
     }
 
     #[Route('/excursion/create', name: 'excursion_create', methods: ['GET', 'POST'])]
-    // TODO Ajouter ISGranted ?
 
     public function create(
         Request                $request,
@@ -161,7 +158,6 @@ class ExcursionController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        //TODO Clean code
         $this->denyAccessUnlessGranted('EXCURSION_VIEW_CANCEL', $excursion);
 
         $deleteExcursionForm = $this->createForm(DeleteExcursionType::class, $excursion);
