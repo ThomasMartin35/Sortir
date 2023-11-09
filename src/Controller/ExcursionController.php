@@ -68,6 +68,9 @@ class ExcursionController extends AbstractController
     ): Response
     {
         $excursion = new Excursion();
+        $userCampus = $this->getUser()->getCampus();
+        $excursion->setCampus($userCampus);
+
         $excursionForm = $this->createForm(ExcursionType::class, $excursion);
         $excursionForm->handleRequest($request);
 

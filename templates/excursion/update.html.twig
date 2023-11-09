@@ -7,24 +7,35 @@
 
         {{ form_start(excursionForm)}}
         {{ form_label(excursionForm.name) }}
-        {{ form_widget(excursionForm.name) }}<br>
+        {{ form_widget(excursionForm.name) }}
+        {{ form_errors(excursionForm.name) }}<br>
+        <br>
         {{ form_label(excursionForm.startDate) }}
-        {{ form_widget(excursionForm.startDate) }}<br>
+        {{ form_widget(excursionForm.startDate) }}
+        {{ form_errors(excursionForm.startDate) }}
+        <br>
         {{ form_label(excursionForm.limitRegistrationDate) }}
-        {{ form_widget(excursionForm.limitRegistrationDate) }}<br>
+        {{ form_widget(excursionForm.limitRegistrationDate) }}
+        {{ form_errors(excursionForm.limitRegistrationDate) }}<br>
         {{ form_label(excursionForm.maxRegistrationNumber) }}
-        {{ form_widget(excursionForm.maxRegistrationNumber) }}<br>
+        {{ form_widget(excursionForm.maxRegistrationNumber) }}
+        {{ form_errors(excursionForm.maxRegistrationNumber) }}<br>
         {{ form_label(excursionForm.duration) }}
-        {{ form_widget(excursionForm.duration) }}<br>
+        {{ form_widget(excursionForm.duration) }}
+        {{ form_errors(excursionForm.duration) }}<br>
         {{ form_label(excursionForm.description) }}
-        {{ form_widget(excursionForm.description) }}<br>
+        {{ form_widget(excursionForm.description) }}
+        {{ form_errors(excursionForm.description) }}<br>
         <!-- ajouter le campus par défaut du user -->
         {{ form_label(excursionForm.campus) }}
-        {{ form_widget(excursionForm.campus) }}<br>
+        {{ form_widget(excursionForm.campus) }}
+        {{ form_errors(excursionForm.campus) }}<br>
         {{ form_label(excursionForm.city) }}
-        {{ form_widget(excursionForm.city) }}<br>
+        {{ form_widget(excursionForm.city) }}
+        {{ form_errors(excursionForm.city) }}<br>
         {{ form_label(excursionForm.place) }}
-        {{ form_widget(excursionForm.place) }}<br>
+        {{ form_widget(excursionForm.place) }}
+        {{ form_errors(excursionForm.place) }}<br>
 
         {% if is_granted('EXCURSION_EDIT_PUBLISH', excursion) %}
             {{ form_row(excursionForm.create) }}<br>
