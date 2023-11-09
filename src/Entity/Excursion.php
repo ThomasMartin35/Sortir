@@ -20,7 +20,6 @@ class Excursion
 
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\NotBlank(message: 'Veuillez renseigner un titre')]
-    #[Assert\NotNull(groups: ['publish','create'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
