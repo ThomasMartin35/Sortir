@@ -1,3 +1,9 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 a{
     text-decoration: none !important;
 }
@@ -147,4 +153,15 @@ label {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+}
+
+
+footer {
+    color: white;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    justify-content: center;
+    background-color: #2C3E50;
+    margin-top: auto;
 }
