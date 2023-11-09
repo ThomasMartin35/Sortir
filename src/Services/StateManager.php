@@ -17,7 +17,7 @@ class StateManager
     {
         $currentDate = new \DateTime();
 
-        $excursions = $this->excursionRepository->findAll();
+        $excursions = $this->excursionRepository->findAllExcursionsWithoutCreated();
 
         $opened = $this->stateRepository->findOneBy(['caption' => 'Opened']);
         $closed = $this->stateRepository->findOneBy(['caption' => 'Closed']);
@@ -25,7 +25,7 @@ class StateManager
         $finished = $this->stateRepository->findOneBy(['caption' => 'Finished']);
         $archived = $this->stateRepository->findOneBy(['caption' => 'Archived']);
 
-        foreach ($excursions as $excursion) {
+        foreach ($excursions as $excursion ) {
             $startDate = $excursion->getStartDate();
             $limitDate = $excursion->getLimitRegistrationDate();
             $duration = $excursion->getDuration();

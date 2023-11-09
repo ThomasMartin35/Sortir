@@ -73,6 +73,16 @@ class ExcursionRepository extends ServiceEntityRepository
         return $queryBuilder->getResult();
     }
 
+    public function findAllExcursionsWithoutCreated(): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->leftJoin('e.state', 's')
+            ->andWhere('s.caption != :createdState')
+            ->setParameter('createdState', 'Created')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
 
 
     public function findExcursionByFilters( FilterModel $filterModel )
