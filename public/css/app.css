@@ -96,3 +96,12 @@ label {
     text-align: center;
     margin-bottom: 1rem;
 }
+
+.carousel-item  {
+    padding : 2% 0% 2% 0%;
+}
+
+.carousel-item img {
+    height: 300px; /* Ajustez cette valeur selon vos besoins */
+    object-fit: cover; /* Cela permet de garder le ratio de l'image tout en la recadrant */
+}
