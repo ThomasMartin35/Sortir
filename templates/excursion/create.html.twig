@@ -19,19 +19,29 @@
             {{ form_widget(excursionForm.limitRegistrationDate) }}
             {{ form_errors(excursionForm.limitRegistrationDate) }}<br>
             {{ form_label(excursionForm.maxRegistrationNumber) }}
-            {{ form_widget(excursionForm.maxRegistrationNumber) }}<br>
+            {{ form_widget(excursionForm.maxRegistrationNumber) }}
+            {{ form_errors(excursionForm.maxRegistrationNumber) }}<br>
+            <br>
             {{ form_label(excursionForm.duration) }}
-            {{ form_widget(excursionForm.duration) }} <br>
+            {{ form_widget(excursionForm.duration) }}
+            {{ form_errors(excursionForm.duration) }}<br>
+            <br>
             {{ form_label(excursionForm.description) }}
-            {{ form_widget(excursionForm.description) }}<br>
+            {{ form_widget(excursionForm.description) }}
+            {{ form_errors(excursionForm.description) }}<br>
+            <br>
             <!-- ajouter le campus par défaut du user -->
             {{ form_label(excursionForm.campus) }}
             {{ form_widget(excursionForm.campus) }}
             {{ form_errors(excursionForm.campus) }}<br>
             {{ form_label(excursionForm.city) }}
-            {{ form_widget(excursionForm.city) }}<br>
+            {{ form_widget(excursionForm.city) }}
+            {{ form_errors(excursionForm.city) }}<br>
+            <br>
             {{ form_label(excursionForm.place) }}
-            {{ form_widget(excursionForm.place) }}<br>
+            {{ form_widget(excursionForm.place) }}
+            {{ form_errors(excursionForm.place) }}<br>
+            <br>
 
             <div> Ajouter un lieu
                 <a href="{{ path('place_create') }}" title="Ajouter un lieu" target="_blank">
@@ -39,6 +49,7 @@
                      alt="Plus" height="50px"
                 >
             </a></div><br>
+
             {{ form_widget(excursionForm.create) }}<br>
             {{ form_widget(excursionForm.publish) }}<br>
     <a href="{{ path('main_excursionList') }}" title="Ajouter un lieu" class="btn btn-danger" >Annuler</a>
