@@ -98,8 +98,11 @@ class ExcursionRepository extends ServiceEntityRepository
 
         if($filterModel->getSelectedCampus()!== null){
             $queryBuilder
+                ->leftJoin('e.state', 's')
+                ->andWhere('s.caption != :archivedState')
                 ->andWhere('e.campus = :selectedCampus')
-                ->setParameter("selectedCampus", $filterModel->getSelectedCampus());
+                ->setParameter("selectedCampus", $filterModel->getSelectedCampus())
+                ->setParameter('archivedState', 'Archived');
         }
 
         if ($filterModel->getSelectedStartDate()){
@@ -116,14 +119,20 @@ class ExcursionRepository extends ServiceEntityRepository
 
         if ($filterModel->isOrganizer()) {
             $queryBuilder
+                ->leftJoin('e.state', 's')
+                ->andWhere('s.caption != :archivedState')
                 ->andWhere('e.organizer = :organizer')
-                ->setParameter('organizer', $member);
+                ->setParameter('organizer', $member)
+                ->setParameter('archivedState', 'Archived');
         }
 
         if ($filterModel->isRegistred()) {
             $queryBuilder
+                ->leftJoin('e.state', 's')
                 ->andWhere(':member MEMBER OF e.participants')
-                ->setParameter('member', $member);
+                ->andWhere('s.caption != :archivedState')
+                ->setParameter('member', $member)
+                ->setParameter('archivedState', 'Archived');
         }
 
         if ($filterModel->isNotRegistred()) {
