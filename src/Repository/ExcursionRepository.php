@@ -128,8 +128,13 @@ class ExcursionRepository extends ServiceEntityRepository
 
         if ($filterModel->isNotRegistred()) {
             $queryBuilder
+                ->leftJoin('e.state', 's')
+                ->andWhere('s.caption != :archivedState')
+                ->andWhere('s.caption != :finishedState')
                 ->andWhere(':member NOT MEMBER OF e.participants')
-                ->setParameter('member', $member);
+                ->setParameter('member', $member)
+                ->setParameter('archivedState', 'Archived')
+                ->setParameter('finishedState', 'Finished');
         }
 
         $finishedState = $this->stateRepository->findOneBy(['caption' => 'Finished']);
